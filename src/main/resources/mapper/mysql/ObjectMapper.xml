@@ -19,10 +19,7 @@
     </resultMap>
 
 
-    <resultMap id="BaseResultMap" type="com.design.pension_system.sys.domain.DicCommon">
-        <id column="ID" jdbcType="VARCHAR" property="id"/>
-        <result column="NAME" jdbcType="VARCHAR" property="name"/>
-    </resultMap>
+
 
     <select id="queryTableNameById" parameterType="String" resultType="String">
         select TABLE_NAME  from TB_SYS_ATTACHED_TAB
@@ -72,7 +69,10 @@
         count(*)
         from ${tableName}
     </select>
-
+    <resultMap id="BaseResultMap" type="com.design.pension_system.sys.domain.DicCommon">
+        <id column="ID" jdbcType="VARCHAR" property="id"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+    </resultMap>
 
     <delete id="deletePhoto">
         delete from ${tableName} where main_id=#{wid}
