@@ -18,6 +18,12 @@
         </collection>
     </resultMap>
 
+
+    <resultMap id="BaseResultMap" type="com.design.pension_system.sys.domain.DicCommon">
+        <id column="ID" jdbcType="VARCHAR" property="id"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+    </resultMap>
+
     <select id="queryTableNameById" parameterType="String" resultType="String">
         select TABLE_NAME  from TB_SYS_ATTACHED_TAB
         where id=#{tableId}
@@ -29,7 +35,7 @@
         where main_id=#{mainId}
     </select>
 
-        <select id="queryXzqhTree" resultMap="XzqhTreeResultMap" parameterType="string">
+    <select id="queryXzqhTree" resultMap="XzqhTreeResultMap" parameterType="string">
             SELECT
             a.id as value,
             b.id as value_two,
@@ -47,6 +53,25 @@
 
         </select>
 
+    <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
+        select
+        id,
+        name
+        from ${tableName}
+        <choose>
+            <when test="orderBy != null and orderBy !=''">
+                order by ${orderBy}
+            </when>
+            <otherwise>
+                order by id
+            </otherwise>
+        </choose>
+    </select>
+    <select id="selectAllCount" resultType="java.lang.Integer">
+           select
+        count(*)
+        from ${tableName}
+    </select>
 
 
     <delete id="deletePhoto">
