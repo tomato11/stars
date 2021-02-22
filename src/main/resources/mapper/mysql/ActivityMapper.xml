@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.design.pension_system.sys.mapper.ActivityMapper">
+
+
+    <insert id="insertActivity">
+        <selectKey keyProperty="wid" resultType="String" order="BEFORE">
+            <![CDATA[  SELECT UUID()  FROM  dual  ]]>
+        </selectKey>
+        insert into tb_activity_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wid != null and wid ！= ''">
+                wid,
+            </if>
+            <if test="name != null and name ！= ''">
+                NAME,
+            </if>
+            <if test="type != null and type ！= ''">
+                TYPE,
+            </if>
+            <if test="region != null and region ！= ''">
+                REGION,
+            </if>
+            <if test="address != null and address ！= ''">
+                ADDRESS,
+            </if>
+            <if test="cost != null and cost ！= ''">
+                COST,
+            </if>
+            <if test="startTime != null and startTime ！= ''">
+                START_TIME,
+            </if>
+            <if test="endTime != null and endTime ！= ''">
+                END_TIME,
+            </if>
+            <if test="number != null and NUMBER ！= ''">
+                NUMBER,
+            </if>
+            <if test="remark != null and REMARK ！= ''">
+                REMARK,
+            </if>
+            CREATE_TIME,
+            UPDATE_TIME
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wid != null and wid ！= ''">
+                #{wid},
+            </if>
+            <if test="NAME != null and NAME ！= ''">
+                #{name},
+            </if>
+            <if test="TYPE != null and TYPE ！= ''">
+                #{type},
+            </if>
+            <if test="REGION != null and REGION ！= ''">
+                #{region},
+            </if>
+            <if test="ADDRESS != null and ADDRESS ！= ''">
+                #{address},
+            </if>
+            <if test="COST != null and COST ！= ''">
+                #{cost},
+            </if>
+
+            <if test="starTime != null and startTime ！= ''">
+                #{startTime},
+            </if>
+            <if test="endTime != null and endTime ！= ''">
+                #{endTime},
+            </if>
+            <if test="number != null and number ！= ''">
+                #{number},
+            </if>
+            <if test="REMARK != null and REMARK ！= ''">
+                #{remark},
+            </if>
+            now(),now(),
+
+
+        </trim>
+    </insert>
+    <update id="updateActivity">
+        update tb_activity_info
+        <set>
+            <if test="name != null and name ！= ''">
+                name= #{name},
+            </if>
+            <if test="type != null and type ！= ''">
+                type= #{type},
+            </if>
+            <if test="region != null and region ！= ''">
+                region= #{region},
+            </if>
+            <if test="address != null and address ！= ''">
+                address= #{address},
+            </if>
+            <if test="cost != null and cost ！= ''">
+                cost= #{cost},
+            </if>
+
+            <if test="starTime != null and startTime ！= ''">
+                star_time= #{startTime},
+            </if>
+            <if test="endTime != null and endTime ！= ''">
+                end_time = #{endTime},
+            </if>
+            <if test="number != null and number ！= ''">
+                number = #{number},
+            </if>
+            <if test="remark != null and remark ！= ''">
+                remark = #{remark},
+            </if>
+            update_time=now(),
+        </set>
+        where wid=#{wid}
+    </update>
+    <delete id="deleteActivity">
+         delete from tb_activity_info where wid=#{wid}
+    </delete>
+    <select id="ActivityListByAdmin" resultType="java.util.HashMap">
+        SELECT
+        wid,
+        a. NAME AS `name`,
+        type,
+        b.`NAME` AS typeName,
+        cost,
+        CONCAT(START_TIME, '~', END_TIME) AS activityTime,
+        UPDATE_TIME AS updateTime,
+        a.region,
+        c.full_name as regionName
+        FROM
+        tb_activity_info a
+        LEFT JOIN tb_dic_activity_type b ON a.TYPE = b.id
+        left join tb_dic_xj_xzqh c on IF (
+        LOCATE(',', a.REGION) != 0,
+        RIGHT (
+        a.REGION,
+        LENGTH(REGION) - LOCATE(',', a.REGION)
+        ),
+        a.REGION
+        )=c.id
+        where
+        1=1
+        <if test="type!=null and type!=''">
+            and a.type=#{type}
+        </if>
+        <if test="name!=null and name!=''">
+            and a.name=#{name}
+        </if>
+    </select>
+    <select id="ActivityDetails" resultType="java.util.HashMap">
+        SELECT
+        wid,
+        a. NAME AS `name`,
+        type,
+        b.`NAME` AS typeName,
+        a.REGION AS region,
+        a.ADDRESS AS address,
+        cost,
+        CONCAT(START_TIME, '~', END_TIME) AS activityTime,
+        number,
+        remark,
+        UPDATE_TIME AS updateTime,
+        c.full_name as regionName
+        FROM
+        tb_activity_info a
+        LEFT JOIN tb_dic_activity_type b ON a.TYPE = b.id
+        LEFT JOIN tb_dic_xj_xzqh c on IF (
+        LOCATE(',', a.REGION) != 0,
+        RIGHT (
+        a.REGION,
+        LENGTH(REGION) - LOCATE(',', a.REGION)
+        ),
+        a.REGION
+        )=c.id
+        where wid=#{wid}
+
+    </select>
+    <select id="ActivityListByUser" resultType="java.util.HashMap">
+        SELECT
+        wid,
+        a. NAME AS `name`,
+        cost,
+        CONCAT(START_TIME, '至', END_TIME) AS activityTime,
+        UPDATE_TIME AS updateTime,
+        a.region,b.full_name as regionName
+        FROM
+        tb_activity_info a
+        LEFT JOIN tb_dic_xj_xzqh b ON IF (
+        LOCATE(',', a.REGION) != 0,
+        RIGHT (
+        a.REGION,
+        LENGTH(REGION) - LOCATE(',', a.REGION)
+        ),
+        a.REGION
+        )=b.id
+        where
+        1=1
+        <if test="type!=null and type!=''">
+            and a.type=#{type}
+        </if>
+        order by CREATE_TIME desc, CONVERT( a.name USING gbk )
+
+    </select>
+</mapper>

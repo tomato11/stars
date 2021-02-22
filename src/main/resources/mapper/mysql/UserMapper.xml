@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.design.pension_system.sys.mapper.UserMapper">
+    <insert id="insertUserRoleMiddle">
+        insert into tb_sys_user_r_role(id,login_id,role_id) value (uuid(),loginId,roleId)
+    </insert>
+    <update id="updateUser">
+        update tb_user_info
+        <set>
+            <if test="loginId != null and loginId != ''">
+                LOGIN_ID=#{loginId},
+            </if>
+            <if test="password != null and password != ''">
+                password=#{password},
+            </if>
+            <if test="name != null and name != ''">
+                name=#{name},
+            </if>
+            <if test="sex != null and sex != ''">
+                SEX=#{sex},
+            </if>
+            <if test="birthDate != null and birthDate != ''">
+                BIRTH_DATE=#{birthDate},
+            </if>
+            <if test="phone != null and phone != ''">
+                PHONE=#{phone},
+            </if>
+            <if test="education != null and education != ''">
+                EDUCATION=#{education},
+            </if>
+            <if test="company != null and company != ''">
+                COMPANY=#{company},
+            </if>
+            <if test="workingTime != null and workingTime != ''">
+                WORKING_TIME=#{workingTime},
+            </if>
+            <if test="COST != null and COST != ''">
+                COST=#{COST},
+            </if>
+            <if test="illnessHistory != null and illnessHistory != ''">
+                ILLNESS_HISTORY=#{illnessHistory},
+            </if>
+            <if test="healthDescription != null and healthDescription != ''">
+                HEALTH_DESCRIPTION=#{healthDescription},
+            </if>
+            <if test="type != null and type != ''">
+                TYPE=#{type},
+            </if>
+            <if test="business != null and business != ''">
+                BUSINESS=#{business},
+            </if>
+            <if test="number != null and number != ''">
+                NUMBER=#{number},
+            </if>
+            <if test="REGION != null and REGION != ''">
+                REGION=#{REGION},
+            </if>
+            <if test="address != null and address != ''">
+                ADDRESS=#{address},
+            </if>
+            update_time=now(),
+        </set>
+        where wid=#{wid}
+    </update>
+    <select id="getBusinessByType" resultType="java.util.HashMap">
+        SELECT
+        id,
+        NAME as `name`
+        FROM
+        tb_dic_business
+        WHERE MAIN_ID=#{type}
+        ORDER BY sort
+    </select>
+    <select id="userList" resultType="java.util.HashMap">
+        SELECT
+        wid,
+        a. NAME AS `name`,
+        sex,
+        c. NAME AS sexName,
+        TIMESTAMPDIFF(
+        YEAR,
+        CONCAT(BIRTH_DATE),
+        NOW()
+        ) AS age,
+        phone,
+        type,
+        b. NAME AS typeName,
+        create_time AS createTime
+        FROM
+        tb_user_info a
+        LEFT JOIN tb_dic_user_type b ON a.type = b.ID
+        LEFT JOIN tb_dic_user_sex c ON a.sex = c.id
+        where 1=1
+        <if test="type!=null and type!=''">
+            and a.type=#{type}
+        </if>
+        <if test="name!=null and name!=''">
+            and a.name=#{name}
+        </if>
+    </select>
+    <select id="evaluateList" resultType="java.util.HashMap">
+        SELECT
+        b.wid,
+        IFNULL(avg(SCORE),'暂无') AS score,
+        b.`NAME` AS `name`,
+        GROUP_CONCAT(d.`NAME`) AS businessName,
+        c. NAME AS typeName,
+        COST AS cost
+        FROM
+        tb_order_info a
+        right JOIN tb_user_info b ON a.MAIN_ID = b.WID
+        LEFT JOIN tb_dic_user_type c ON b.type = c.id
+        LEFT JOIN tb_dic_business d ON FIND_IN_SET(d.id, b.BUSINESS) > 0
+        where
+        1=1 and
+        b.type!='1'
+        <if test="type!=null and type!=''">
+            and b.type=#{type}
+        </if>
+        GROUP BY
+        a.MAIN_ID
+        ORDER BY
+        score,CONVERT( b.name USING gbk )
+        LIMIT 0,5
+    </select>
+    <select id="businessList" resultType="java.util.HashMap">
+        SELECT
+        a.wid,
+        a. NAME AS `name`,
+        IFNULL(AVG(b.SCORE), '暂无') AS score,
+        GROUP_CONCAT(d.`NAME`) AS businessName,
+        c. NAME AS typeName,
+        COST AS cost
+        FROM
+        tb_user_info a
+        RIGHT JOIN tb_order_info b ON b.MAIN_ID = a.WID
+        LEFT JOIN tb_dic_user_type c ON b.type = c.id
+        LEFT JOIN tb_dic_business d ON FIND_IN_SET(d.id, a.BUSINESS) > 0
+        LEFT JOIN tb_dic_age e ON TIMESTAMPDIFF(
+        YEAR,
+        CONCAT(a.BIRTH_DATE),
+        now()
+        ) BETWEEN e.`START`
+        AND e.`end`
+        WHERE
+        1 = 1
+        <if test="type!=null and type!=''">
+            and a.type=#{type}
+        </if>
+        <if test="business!=null and business!=''">
+            and FIND_IN_SET(#{business}, a.BUSINESS) > 0
+        </if>
+        <if test="sex!=null and sex!=''">
+            and a.sex=#{sex}
+        </if>
+        <if test="age!=null and age!=''">
+            and e.id=#{age}
+        </if>
+
+        GROUP BY
+        a.wid
+
+    </select>
+    <select id="queryTypeAndWidByLoginId" resultType="java.util.HashMap">
+        select  type,wid from tb_user_info where login_id=#{loginId}
+    </select>
+    <select id="queryUserDetils" resultType="java.util.HashMap">
+        SELECT
+        wid,
+        login_id AS loginId,
+
+        a. NAME AS `name`,
+        SEX AS sex,
+        b. NAME AS sexName,
+        a.BIRTH_DATE AS birthDate,
+        a.PHONE AS phone,
+        EDUCATION AS education,
+        COMPANY AS company,
+        WORKING_TIME AS workingTime,
+        COST AS cost,
+        TYPE AS type,
+        c. NAME AS typeName,
+        BUSINESS AS business,
+         GROUP_CONCAT(e.`NAME`) AS businessName
+        NUMBER AS `number`,
+        REGION AS region,
+        d. NAME AS regionName,
+        ADDRESS AS address
+        FROM
+        tb_user_info a
+        LEFT JOIN tb_dic_user_sex b ON a.sex = b.id
+        LEFT JOIN tb_dic_user_type c ON a.TYPE = c.id
+        LEFT JOIN tb_dic_xj_xzqh d ON
+        IF (
+        LOCATE(',', a.REGION) != 0,
+        RIGHT (
+        a.REGION,
+        LENGTH(REGION) - LOCATE(',', a.REGION)
+        ),
+        a.REGION
+        ) = d.id
+         LEFT JOIN tb_dic_business e ON FIND_IN_SET(e.id, a.BUSINESS) > 0
+        where a.loginId=#{loginId}
+        GROUP BY a.wid
+    </select>
+    <select id="getMenuByLoginId" resultType="java.util.HashMap">
+        SELECT
+	d.`NAME` AS `name`,
+	d.ACTION AS action
+FROM
+	tb_user_info a
+LEFT JOIN tb_sys_user_r_role b ON a.LOGIN_ID = b.LOGIN_ID
+LEFT JOIN tb_sys_role_r_menu c ON b.ROLE_ID = c.ROLE_ID
+LEFT JOIN tb_sys_menu d ON c.MENU_ID = d.MENU_TYPE
+where 1=1
+<if test="loginId !=null and loginId !=''">
+    and a.login_id=#{loginId}
+</if>
+    </select>
+
+</mapper>

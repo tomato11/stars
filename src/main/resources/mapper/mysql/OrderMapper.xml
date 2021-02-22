@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.design.pension_system.sys.mapper.OrderMapper">
+    <insert id="insertOrder">
+        <selectKey keyProperty="wid" resultType="String" order="BEFORE">
+            <![CDATA[  SELECT UUID()  FROM  dual  ]]>
+        </selectKey>
+        insert into tb_order_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wid != null and wid ！= ''">
+                wid,
+            </if>
+            <if test="mainId != null and mainId != ''">
+                main_id,
+            </if>
+            <if test="elderlyId != null and elderlyId != ''">
+                ELDERLY_ID,
+            </if>
+            <if test="TYPE != null and TYPE != ''">
+                TYPE,
+            </if>
+            <if test="STATUS != null and STATUS != ''">
+                STATUS,
+            </if>
+            <if test="REASON != null and REASON != ''">
+                REASON,
+            </if>
+            <if test="SCORE != null and SCORE != ''">
+                SCORE,
+            </if>
+            <if test="startTime != null and startTime != ''">
+                START_TIME,
+            </if>
+            <if test="endTime != null and endTime != ''">
+                END_TIME,
+            </if>
+            <if test="describe != null and describe != ''">
+                describe,
+            </if>
+            CREATE_TIME,
+            UPDATE_TIME
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wid != null and wid ！= ''">
+                #{wid} ,
+            </if>
+            <if test="mainId != null and mainId != ''">
+                #{mainId},
+            </if>
+            <if test="elderlyId != null and elderlyId != ''">
+                #{elderlyId},
+            </if>
+            <if test="TYPE != null and TYPE != ''">
+                #{type},
+            </if>
+            <if test="STATUS != null and STATUS != ''">
+                #{status} ,
+            </if>
+            <if test="REASON != null and REASON != ''">
+                #{reason},
+            </if>
+            <if test="SCORE != null and SCORE != ''">
+                #{score},
+            </if>
+            <if test="startTime != null and startTime != ''">
+                #{startTime},
+            </if>
+            <if test="endTime != null and endTime != ''">
+                #{endTime},
+            </if>
+            <if test="describe != null and describe != ''">
+                #{describe},
+            </if>
+            now(),now(),
+        </trim>
+    </insert>
+    <update id="updateOrder">
+        update tb_Order_info
+        <set>
+
+            <if test="mainId != null and mainId != ''">
+                main_id=#{mainId},
+            </if>
+            <if test="elderlyId != null and elderlyId != ''">
+                elderly_Id= #{elderlyId},
+            </if>
+            <if test="TYPE != null and TYPE != ''">
+                TYPE= #{type},
+            </if>
+            <if test="STATUS != null and STATUS != ''">
+                STATUS= #{status} ,
+            </if>
+            <if test="REASON != null and REASON != ''">
+                REASON= #{reason},
+            </if>
+            <if test="SCORE != null and SCORE != ''">
+                SCORE= #{score},
+            </if>
+            <if test="startTime != null and startTime != ''">
+                startTime= #{startTime},
+            </if>
+            <if test="endTime != null and endTime != ''">
+                endTime= #{endTime},
+            </if>
+            <if test="describe != null and describe != ''">
+                describe= #{describe},
+            </if>
+             <if test="evaluate != null and evaluate != ''">
+                 EVALUATE= #{evaluate},
+            </if>
+            update_time=now(),
+        </set>
+        where wid=#{wid}
+    </update>
+    <delete id="deleteOrder">
+         delete from tb_Order_info where wid=#{wid}
+    </delete>
+
+    <select id="OrderDetails" resultType="java.util.HashMap">
+       SELECT
+       REASON as reason,
+       SCORE as score,
+       EVALUATE as evaluate
+        FROM
+        tb_Order_info a
+        where a.wid=#{wid}
+
+    </select>
+    <select id="OrderListByUser" resultType="java.util.HashMap">
+        SELECT
+        a.wid,
+        b. NAME AS `name`,
+        TIMESTAMPDIFF(
+        YEAR,
+        CONCAT(e.BIRTH_DATE),
+        NOW()
+        ) AS age,
+        a. STATUS AS `status`,
+        c. NAME AS statusName,
+        START_TIME AS startTime,
+        END_TIME AS endTime,
+        CONCAT(
+        DATE_FORMAT(
+        START_TIME,
+        '%Y-%m-%d %H:%i'
+        ),
+        '至',
+        DATE_FORMAT(END_TIME, '%Y-%m-%d %H:%i')
+        ) AS serviceTime,
+        a.CREATE_TIME AS createTime,
+        f.full_name AS regionName
+        FROM
+        tb_Order_info a
+        LEFT JOIN tb_user_info b ON a.MAIN_ID = b.wid
+        LEFT JOIN tb_dic_order_status c ON a.`STATUS` = c.ID
+        LEFT JOIN tb_dic_score d ON a.SCORE >= d.`START` <![CDATA[<=]]> d.`END`
+        LEFT JOIN tb_elderly_info e ON a.ELDERLY_ID = e.WID
+        LEFT JOIN tb_dic_xj_xzqh f ON
+        IF (
+        LOCATE(',', e.REGION) != 0,
+        RIGHT (
+        e.REGION,
+        LENGTH(e.REGION) - LOCATE(',', e.REGION)
+        ),
+        e.REGION
+        ) = f.id
+
+        WHERE
+        1 = 1
+        <if test="status!=null and status!='' ">
+            and a.status=#{status}
+        </if>
+        <if test="score!=null and score!='' ">
+            and d.id=#{score}
+        </if>
+        <if test="type!=null and type!='' ">
+            and a.type=#{type}
+        </if>
+    </select>
+</mapper>

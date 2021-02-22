@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.design.pension_system.sys.mapper.ObjectMapper">
+
+    <resultMap id="XzqhTreeResultMap" type="com.design.pension_system.sys.domain.Region">
+        <result column="value" property="value" javaType="java.lang.String"/>
+        <result column="label" property="label" javaType="java.lang.String"/>
+        <result column="isLeaf" property="isLeaf" javaType="java.lang.Boolean"/>
+        <collection property="children" ofType="com.design.pension_system.sys.domain.Region">
+            <result column="value_two" property="value" javaType="java.lang.String"/>
+            <result column="label_two" property="label" javaType="java.lang.String"/>
+            <result column="isLeaf_two" property="isLeaf" javaType="java.lang.Boolean"/>
+            <collection property="children" ofType="com.design.pension_system.sys.domain.Region">
+                <result column="value_three" property="value" javaType="java.lang.String"/>
+                <result column="label_three" property="label" javaType="java.lang.String"/>
+                <result column="isLeaf_three" property="isLeaf" javaType="java.lang.Boolean"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="queryTableNameById" parameterType="String" resultType="String">
+        select TABLE_NAME  from TB_SYS_ATTACHED_TAB
+        where id=#{tableId}
+    </select>
+    <select id="queryPhotoByMainId" resultType="java.util.HashMap">
+          select
+        *
+        from ${tableName}
+        where main_id=#{mainId}
+    </select>
+
+        <select id="queryXzqhTree" resultMap="XzqhTreeResultMap" parameterType="string">
+            SELECT
+            a.id as value,
+            b.id as value_two,
+            c.id as value_three,
+            a.name as label,
+            b.name as label_two,
+            c.name as label_three,
+            a.is_leaf as isLeaf,
+            b.is_leaf as isLeaf_two,
+            c.is_leaf as isLeaf_three
+            FROM
+            v_dic_article_xzqh a
+            LEFT JOIN v_dic_article_xzqh b ON a.id = b.parent_id
+            LEFT JOIN v_dic_article_xzqh c ON b.id = c.parent_id
+
+        </select>
+
+
+
+    <delete id="deletePhoto">
+        delete from ${tableName} where main_id=#{wid}
+    </delete>
+    <insert id="saveMiddlePhoto">
+        insert into ${tableName}
+        <foreach collection="photoList" separator="," item="items" open="values">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                uuid(),
+                #{mainId},
+                #{items.url},
+                #{items.uid},
+                #{items.name},
+                now(),
+                now()
+            </trim>
+        </foreach>
+    </insert>
+</mapper>

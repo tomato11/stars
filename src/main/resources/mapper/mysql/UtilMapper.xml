@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.design.pension_system.sys.mapper.UtilMapper">
+
+
+    <insert id="saveLoginCode">
+        replace into tb_login_code_info value(#{phone},#{code},now())
+    </insert>
+</mapper>

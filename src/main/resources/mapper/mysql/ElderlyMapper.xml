@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.design.pension_system.sys.mapper.ElderlyMapper">
+
+    <insert id="insertElderly">
+        <selectKey keyProperty="wid" resultType="String" order="BEFORE">
+            <![CDATA[  SELECT UUID()  FROM  dual  ]]>
+        </selectKey>
+        insert into tb_elderly_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wid != null and wid ！= ''">
+                wid,
+            </if>
+            <if test="mainId != null and mainId != ''">
+                main_id,
+            </if>
+            <if test="name != null and name != ''">
+                name,
+            </if>
+            <if test="sex != null and sex != ''">
+                SEX,
+            </if>
+            <if test="birthDate != null and birthDate != ''">
+                BIRTH_DATE,
+            </if>
+            <if test="phone != null and phone != ''">
+                PHONE,
+            </if>
+            <if test="illnessHistory != null and illnessHistory != ''">
+                ILLNESS_HISTORY,
+            </if>
+            <if test="healthDescription != null and healthDescription != ''">
+                HEALTH_DESCRIPTION,
+            </if>
+            <if test="number != null and number != ''">
+                NUMBER,
+            </if>
+            <if test="REGION != null and REGION != ''">
+                REGION,
+            </if>
+            <if test="address != null and address != ''">
+                ADDRESS,
+            </if>
+            CREATE_TIME,
+            UPDATE_TIME
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wid != null and wid ！= ''">
+                #{wid},
+            </if>
+            <if test="mainId != null and mainId != ''">
+                main_id,
+            </if>
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+            <if test="sex != null and sex != ''">
+                #{sex},
+            </if>
+            <if test="birthDate != null and birthDate != ''">
+                #{birthDate},
+            </if>
+            <if test="phone != null and phone != ''">
+                #{phone},
+            </if>
+            <if test="illnessHistory != null and illnessHistory != ''">
+                #{illnessHistory},
+            </if>
+            <if test="healthDescription != null and healthDescription != ''">
+                #{healthDescription},
+            </if>
+            <if test="number != null and number != ''">
+                #{number},
+            </if>
+            <if test="REGION != null and REGION != ''">
+                #{REGION},
+            </if>
+            <if test="address != null and address != ''">
+                #{address},
+            </if>
+            now(),now(),
+        </trim>
+    </insert>
+    <update id="updateElderly">
+        update tb_Elderly_info
+        <set>
+            <if test="name != null and name != ''">
+                name= #{name},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex= #{sex},
+            </if>
+            <if test="birthDate != null and birthDate != ''">
+                birth_date= #{birthDate},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone= #{phone},
+            </if>
+            <if test="illnessHistory != null and illnessHistory != ''">
+                ILLNESS_HISTORY=#{illnessHistory},
+            </if>
+            <if test="healthDescription != null and healthDescription != ''">
+                HEALTH_DESCRIPTION=#{healthDescription},
+            </if>
+            <if test="number != null and number != ''">
+                number= #{number},
+            </if>
+            <if test="REGION != null and REGION != ''">
+                REGION= #{REGION},
+            </if>
+            <if test="address != null and address != ''">
+                address= #{address},
+            </if>
+            update_time=now(),
+        </set>
+        where wid=#{wid}
+    </update>
+    <delete id="deleteElderly">
+         delete from tb_elderly_info where wid=#{wid}
+    </delete>
+
+    <select id="ElderlyDetails" resultType="java.util.HashMap">
+        SELECT
+        wid,
+        a. NAME AS `name`,
+        sex,
+        b. NAME AS sexName,
+        BIRTH_DATE AS birthDate,
+        phone,
+        number,
+        region,
+        address,
+        ILLNESS_HISTORY AS illnessHistory,
+        HEALTH_DESCRIPTION AS healthDescription,
+        c.full_name as regionName
+        FROM
+        tb_elderly_info a
+        LEFT JOIN tb_dic_user_sex b ON a.sex = b.id
+         LEFT JOIN tb_dic_xj_xzqh c ON
+        IF (
+        LOCATE(',', a.REGION) != 0,
+        RIGHT (
+        a.REGION,
+        LENGTH(a.REGION) - LOCATE(',', a.REGION)
+        ),
+        a.REGION
+        )=c.id
+        where a.wid=#{wid}
+
+    </select>
+    <select id="ElderlyListByUser" resultType="java.util.HashMap">
+        SELECT
+        wid,
+        a. NAME AS `name`,
+        BIRTH_DATE AS birthDate,
+        phone,
+        region,
+        TIMESTAMPDIFF(
+        YEAR,
+        CONCAT(BIRTH_DATE),
+        NOW()
+        ) AS age,
+        b.full_name as regionName
+        FROM
+        tb_elderly_info a
+        LEFT JOIN tb_dic_xj_xzqh b ON
+        IF (
+        LOCATE(',', a.REGION) != 0,
+        RIGHT (
+        a.REGION,
+        LENGTH(a.REGION) - LOCATE(',', a.REGION)
+        ),
+        a.REGION
+        )=b.id
+        where
+        1=1
+        <if test="name!=null and name!=''">
+        and a.name=#{name}
+        </if>
+        <if test="loginId!=null and loginId!=''">
+            and a.main_id=#{loginId}
+        </if>
+    </select>
+</mapper>

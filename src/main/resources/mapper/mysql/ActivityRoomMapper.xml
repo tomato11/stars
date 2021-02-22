@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.design.pension_system.sys.mapper.ActivityRoomMapper">
+    <insert id="insertActivityRoom">
+        <selectKey keyProperty="wid" resultType="String" order="BEFORE">
+            <![CDATA[  SELECT UUID()  FROM  dual  ]]>
+        </selectKey>
+        insert into tb_activity_room_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wid != null and wid ！= ''">
+                wid,
+            </if>
+            <if test="NAME != null and NAME ！= ''">
+                NAME,
+            </if>
+            <if test="TYPE != null and TYPE ！= ''">
+                TYPE,
+            </if>
+            <if test="REGION != null and REGION ！= ''">
+                REGION,
+            </if>
+            <if test="ADDRESS != null and ADDRESS ！= ''">
+                ADDRESS,
+            </if>
+            <if test="COST != null and COST ！= ''">
+                COST,
+            </if>
+            <if test="AREA != null and AREA ！= ''">
+                AREA,
+            </if>
+            <if test="starTime != null and startTime ！= ''">
+                START_TIME,
+            </if>
+            <if test="endTime != null and endTime ！= ''">
+                END_TIME,
+            </if>
+            CREATE_TIME,
+            UPDATE_TIME
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wid != null and wid ！= ''">
+                #{wid},
+            </if>
+            <if test="NAME != null and NAME ！= ''">
+                #{name},
+            </if>
+            <if test="TYPE != null and TYPE ！= ''">
+                #{type},
+            </if>
+            <if test="REGION != null and REGION ！= ''">
+                #{region},
+            </if>
+            <if test="ADDRESS != null and ADDRESS ！= ''">
+                #{address},
+            </if>
+            <if test="COST != null and COST ！= ''">
+                #{cost},
+            </if>
+            <if test="AREA != null and AREA ！= ''">
+                #{area},
+            </if>
+            <if test="starTime != null and startTime ！= ''">
+                #{startTime},
+            </if>
+            <if test="endTime != null and endTime ！= ''">
+                #{endTime},
+            </if>
+
+            now(),now(),
+
+
+        </trim>
+    </insert>
+
+    <update id="updateActivityRoom">
+        update tb_activity_room_info
+        <set>
+            <if test="name != null and name ！= ''">
+                name= #{name},
+            </if>
+            <if test="type != null and type ！= ''">
+                type= #{type},
+            </if>
+            <if test="region != null and region ！= ''">
+                region= #{region},
+            </if>
+            <if test="address != null and address ！= ''">
+                address= #{address},
+            </if>
+            <if test="cost != null and cost ！= ''">
+                cost= #{cost},
+            </if>
+            <if test="area != null and area ！= ''">
+                area= #{area},
+            </if>
+            <if test="starTime != null and startTime ！= ''">
+                star_time= #{startTime},
+            </if>
+            <if test="endTime != null and endTime ！= ''">
+                END_TIME = #{endTime},
+            </if>
+            update_time=now(),
+        </set>
+        where wid=#{wid}
+    </update>
+    <delete id="deleteActivityRoom">
+        delete from tb_activity_room_info where wid=#{wid}
+    </delete>
+
+    <select id="activityRoomList" resultType="java.util.HashMap">
+        SELECT
+        wid,
+        a. NAME AS `name`,
+        type,
+        b.`NAME` AS typeName,
+        REGION AS region,
+        area,
+        COST AS cost,
+        UPDATE_TIME AS updateTime,
+        concat(a.start_time,'~',end_time) as businessTime,
+        c.full_name as regionName
+        FROM
+        tb_activity_room_info a
+        LEFT JOIN tb_dic_activity_room_type b ON a.type = b.ID
+        left join tb_dic_xj_xzqh c on IF (
+        LOCATE(',', a.REGION) != 0,
+        RIGHT (
+        a.REGION,
+        LENGTH(a.REGION) - LOCATE(',', a.REGION)
+        ),
+        a.REGION
+        )=c.id
+        where 1=1
+        <if test="type!=null and type!='' ">
+            and type=#{type}
+        </if>
+        <if test="name!=null and name!='' ">
+            and name=#{name}
+        </if>
+    </select>
+    <select id="activityRoomDetails" resultType="java.util.HashMap">
+SELECT
+	wid,
+	a. NAME AS `name`,
+	type,
+	b.`NAME` AS typeName,
+	REGION AS region,
+	area,
+	COST AS cost,
+	UPDATE_TIME AS updateTime,
+	c.full_name as regionName
+FROM
+	tb_activity_room_info a
+LEFT JOIN tb_dic_activity_room_type b ON a.type = b.ID
+left join tb_dic_xj_xzqh c on IF (
+        LOCATE(',', a.REGION) != 0,
+        RIGHT (
+        a.REGION,
+        LENGTH(a.REGION) - LOCATE(',', a.REGION)
+        ),
+        a.REGION
+        )=c.id
+where
+ wid=#{wid}
+    </select>
+
+
+</mapper>

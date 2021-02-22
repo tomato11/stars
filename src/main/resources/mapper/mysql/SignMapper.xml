@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.design.pension_system.sys.mapper.SignMapper">
+    <insert id="userRegister">
+        <selectKey keyProperty="wid" resultType="String" order="BEFORE">
+            <![CDATA[  SELECT UUID()  FROM  dual  ]]>
+        </selectKey>
+        insert into tb_user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wid != null and wid ！= ''">
+                wid,
+            </if>
+            <if test="loginId != null and loginId != ''">
+                LOGIN_ID,
+            </if>
+            <if test="password != null and password != ''">
+                password,
+            </if>
+            <if test="name != null and name != ''">
+                name,
+            </if>
+            <if test="sex != null and sex != ''">
+                SEX,
+            </if>
+            <if test="birthDate != null and birthDate != ''">
+                BIRTH_DATE,
+            </if>
+            <if test="phone != null and phone != ''">
+                PHONE,
+            </if>
+            <if test="education != null and education != ''">
+                EDUCATION,
+            </if>
+            <if test="company != null and company != ''">
+                COMPANY,
+            </if>
+            <if test="workingTime != null and workingTime != ''">
+                WORKING_TIME,
+            </if>
+            <if test="COST != null and COST != ''">
+                COST,
+            </if>
+            <if test="illnessHistory != null and illnessHistory != ''">
+                ILLNESS_HISTORY,
+            </if>
+            <if test="healthDescription != null and healthDescription != ''">
+                HEALTH_DESCRIPTION,
+            </if>
+            <if test="type != null and type != ''">
+                TYPE,
+            </if>
+            <if test="business != null and business != ''">
+                BUSINESS,
+            </if>
+            <if test="number != null and number != ''">
+                NUMBER,
+            </if>
+            <if test="REGION != null and REGION != ''">
+                REGION,
+            </if>
+            <if test="address != null and address != ''">
+                ADDRESS,
+            </if>
+            CREATE_TIME,
+            UPDATE_TIME
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wid != null and wid ！= ''">
+                #{wid},
+            </if>
+            <if test="loginId != null and loginId != ''">
+                #{loginId},
+            </if>
+            <if test="password != null and password != ''">
+                #{password},
+            </if>
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+            <if test="sex != null and sex != ''">
+                #{sex},
+            </if>
+            <if test="birthDate != null and birthDate != ''">
+                #{birthDate},
+            </if>
+            <if test="phone != null and phone != ''">
+                #{phone},
+            </if>
+            <if test="education != null and education != ''">
+                #{education},
+            </if>
+            <if test="company != null and company != ''">
+                #{company},
+            </if>
+            <if test="workingTime != null and workingTime != ''">
+                #{workingTime},
+            </if>
+            <if test="cost != null and cost != ''">
+                #{cost},
+            </if>
+            <if test="illnessHistory != null and illnessHistory != ''">
+                #{illnessHistory},
+            </if>
+            <if test="healthDescription != null and healthDescription != ''">
+                #{healthDescription},
+            </if>
+            <if test="type != null and type != ''">
+                #{type},
+            </if>
+            <if test="business != null and business != ''">
+                #{business},
+            </if>
+            <if test="number != null and number != ''">
+                #{number},
+            </if>
+            <if test="REGION != null and REGION != ''">
+                #{REGION},
+            </if>
+            <if test="address != null and address != ''">
+                #{address},
+            </if>
+            now(),now(),
+        </trim>
+    </insert>
+
+
+    <select id="checkLoginCode" resultType="java.util.HashMap">
+    select * from tb_login_code_info where phone=#{phone} and code=#{code}
+    </select>
+    <select id="checkPassWord" resultType="java.util.HashMap">
+        select * from tb_user_info where login_id=#{loginId} and password=#{passWord}
+    </select>
+
+    <select id="queryPhoneExist" resultType="java.util.HashMap">
+        select * from tb_user_info where phone=#{phone}
+    </select>
+</mapper>

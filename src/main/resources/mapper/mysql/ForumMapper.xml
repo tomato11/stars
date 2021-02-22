@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.design.pension_system.sys.mapper.ForumMapper">
+
+
+    <insert id="insertForum">
+        <selectKey keyProperty="wid" resultType="String" order="BEFORE">
+            <![CDATA[  SELECT UUID()  FROM  dual  ]]>
+        </selectKey>
+        insert into tb_Forum_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wid != null and wid ！= ''">
+                wid,
+            </if>
+            <if test="mainId != null and mainId ！= ''">
+                MAIN_ID,
+            </if>
+            <if test="TITLE != null and TITLE ！= ''">
+                TITLE,
+            </if>
+            <if test="TYPE != null and TYPE ！= ''">
+                TYPE,
+            </if>
+            <if test="DESCRIBE != null and DESCRIBE ！= ''">
+                DESCRIBE,
+            </if>
+            CREATE_TIME,
+            UPDATE_TIME
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wid != null and wid ！= ''">
+                #{wid},
+            </if>
+            <if test="mainId != null and mainId ！= ''">
+                #{mainId},
+            </if>
+            <if test="TITLE != null and TITLE ！= ''">
+                #{TITLE},
+            </if>
+            <if test="TYPE != null and TYPE ！= ''">
+                #{TYPE},
+            </if>
+            <if test="DESCRIBE != null and DESCRIBE ！= ''">
+                #{DESCRIBE},
+            </if>
+            now(),now(),
+        </trim>
+    </insert>
+    <update id="updateForum">
+        update tb_Forum_info
+        <set>
+            <if test="mainId != null and mainId ！= ''">
+                MAIN_ID= #{mainId},
+            </if>
+            <if test="TITLE != null and TITLE ！= ''">
+                TITLE= #{TITLE},
+            </if>
+            <if test="TYPE != null and TYPE ！= ''">
+                TYPE= #{TYPE},
+            </if>
+            <if test="DESCRIBE != null and DESCRIBE ！= ''">
+                DESCRIBE= #{DESCRIBE},
+            </if>
+            update_time=now(),
+        </set>
+        where wid=#{wid}
+    </update>
+    <delete id="deleteForum">
+         delete from tb_Forum_info where wid=#{wid}
+    </delete>
+
+
+    <select id="ForumListByUser" resultType="java.util.HashMap">
+        SELECT
+        a.wid,
+        a.UPDATE_TIME AS updateTime,
+        a.CREATE_TIME AS createTime,
+        b. NAME AS `name`,
+        a.TITLE AS title,
+        a.`DESCRIBE` AS `describe`
+        FROM
+        tb_forum_info a
+        LEFT JOIN tb_user_info b ON a.MAIN_ID = b.WID
+        where 1=1
+        <if test="wid!=null and wid!=null">
+        and a.wid=#{wid}
+        </if>
+        order by a.update_time
+
+    </select>
+</mapper>
