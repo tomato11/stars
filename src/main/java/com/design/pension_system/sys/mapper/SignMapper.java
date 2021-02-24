@@ -1,14 +1,20 @@
 package com.design.pension_system.sys.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.HashMap;
 
 public interface SignMapper {
 
-    HashMap checkLoginCode(HashMap params);
+    String checkLoginCode(HashMap params);
 
     int userRegister(HashMap param);
 
-    HashMap checkPassWord(HashMap params);
+    String checkPassWord(HashMap params);
 
-    HashMap queryPhoneExist(Object phone);
+    String queryPhoneExist(Object phone);
+
+    void insertToken(@Param("ticket") String ticket, @Param("loginId") String loginId);
+
+    String checkToken(String ticket);
 }

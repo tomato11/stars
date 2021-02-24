@@ -9,9 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public interface SignService {
-    HashMap loginCheck(HashMap params) throws NoSuchAlgorithmException;
+
 
     Object sendLoginCode(String phone) throws UnsupportedEncodingException;
 
     int userRegister(HashMap param );
+
+    String findUserByUP(HashMap user);
 }

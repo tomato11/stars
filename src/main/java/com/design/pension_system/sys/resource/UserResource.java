@@ -2,6 +2,7 @@ package com.design.pension_system.sys.resource;
 
 import com.design.pension_system.sys.service.SignService;
 import com.design.pension_system.sys.service.UserService;
+import com.design.pension_system.sys.util.CookieUtil;
 import com.design.pension_system.sys.util.HmResponseUtil;
 import com.github.pagehelper.PageInfo;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +63,10 @@ public class UserResource {
             @ApiImplicitParam(name = "loginId", value = "登陆用户", required = true, paramType = "query", dataType = "string"),
     })
     @GetMapping("/user/detils")
-    public ResponseEntity<Map> userDetils(@RequestParam String loginId) throws Exception {
+    public ResponseEntity<Map> userDetils( HttpServletRequest request) throws Exception {
+        Cookie loginIdCookie = CookieUtil.get(request, "LOGINID");
+        String loginId = loginIdCookie.getValue();
+
         HashMap result = userService.userDetils(loginId);
         if (null != result) {
             return HmResponseUtil.success(result);

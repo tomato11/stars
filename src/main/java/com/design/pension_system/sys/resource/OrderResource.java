@@ -1,6 +1,7 @@
 package com.design.pension_system.sys.resource;
 
 import com.design.pension_system.sys.service.OrderService;
+import com.design.pension_system.sys.util.CookieUtil;
 import com.design.pension_system.sys.util.HmResponseUtil;
 import com.github.pagehelper.PageInfo;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,7 +78,11 @@ public class OrderResource {
             @ApiImplicitParam(name = "pageSize", value = "分页参数：每页数量", required = true, paramType = "query", dataType = "int"),
     })
     @GetMapping("/order/list/user")
-    public ResponseEntity<Map> OrderListByUser(@RequestParam HashMap params) throws Exception {
+    public ResponseEntity<Map> OrderListByUser(@RequestParam HashMap params, HttpServletRequest request) throws Exception {
+        Cookie loginIdCookie = CookieUtil.get(request, "LOGINID");
+        String loginId = loginIdCookie.getValue();
+        params.put("loginId",loginId);
+
         PageInfo<HashMap> result = orderService.OrderListByUser(params);
         if (null != result) {
             return HmResponseUtil.success(result);
