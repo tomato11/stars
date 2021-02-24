@@ -107,7 +107,7 @@ public class ObjectResource {
                             name = "orderBy", value = "排序字段 字段名", required = false, dataType = "string", paramType = "query")})
 
     @RequestMapping(
-            value = {"lectCommonDic"},
+            value = {"selectCommonDic"},
             method = {RequestMethod.GET}
     )
     public ResponseEntity<?> selectDic(@RequestParam HashMap<String, Object> params) {
