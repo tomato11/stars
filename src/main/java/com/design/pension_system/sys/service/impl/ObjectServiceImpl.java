@@ -57,11 +57,11 @@ public class ObjectServiceImpl implements ObjectService {
 
     @Override
     public HashMap<String, Object> selectAll(HashMap<String, Object> params) {
-        HashMap<Object, Object> hm = new HashMap<>();
+        HashMap<String, Object> hm = new HashMap<>();
         List<DicCommon> tbCateManageList = this.objectMapper.selectAll(params);
         int num = this.objectMapper.selectAllCount(params);
         hm.put("total", num);
         hm.put("content", tbCateManageList);
-        return null;
+        return hm;
     }
 }

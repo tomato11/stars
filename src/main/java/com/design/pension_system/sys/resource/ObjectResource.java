@@ -124,8 +124,6 @@ public class ObjectResource {
     @ApiOperation(
             value = "字典表批量查询",
             notes = "根据表名查询字典表"
-
-
     )
     @RequestMapping(
             value = {"/selectCommonDic/multi"},
