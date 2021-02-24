@@ -35,7 +35,7 @@
             <if test="number != null and number != ''">
                 NUMBER,
             </if>
-            <if test="REGION != null and REGION != ''">
+            <if test="region != null and region != ''">
                 REGION,
             </if>
             <if test="address != null and address != ''">
@@ -180,5 +180,8 @@
         <if test="loginId!=null and loginId!=''">
             and a.main_id=#{loginId}
         </if>
+    </select>
+    <select id="queryWidByToken" resultType="java.lang.String">
+        select b.wid from tb_token a left join tb_user_info b on  a.login_id=b.login_id  where a.token=#{ticket}
     </select>
 </mapper>

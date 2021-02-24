@@ -71,4 +71,9 @@ public class ElderlyServiceImpl implements ElderlyService {
         }
         return new PageInfo<HashMap>(hashMaps);
     }
+
+    @Override
+    public String queryWidByToken(String ticket) {
+        return elderlyMapper.queryWidByToken(ticket);
+    }
 }

@@ -15,4 +15,6 @@ public interface ElderlyService {
     PageInfo<HashMap> ElderlyListByUser(HashMap params);
 
     HashMap ElderlyDetails(String wid);
+
+    String queryWidByToken(String ticket);
 }

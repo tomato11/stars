@@ -18,4 +18,5 @@ public interface ElderlyMapper {
     List<HashMap> ElderlyListByUser(HashMap params);
 
 
+    String queryWidByToken(String ticket);
 }

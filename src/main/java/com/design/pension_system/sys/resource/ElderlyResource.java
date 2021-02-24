@@ -20,9 +20,15 @@ import java.util.Map;
 public class ElderlyResource {
     @Autowired
     private ElderlyService elderlyService;
+    @Autowired
+    LoginIdUtil loginIdUtil;
     @ApiOperation(value = "新增老人")
     @PostMapping("/Elderly")
-    public ResponseEntity<Map> insertElderly(@RequestBody HashMap param) throws Exception {
+    public ResponseEntity<Map> insertElderly(@RequestBody HashMap param,HttpServletRequest request) throws Exception {
+        String token = request.getHeader("User_Token");
+        String ticket = loginIdUtil.getLoginIdByToken(token);
+        String wid=elderlyService.queryWidByToken(ticket);
+        param.put("mainId",wid);
         int result = elderlyService.insertElderly(param);
         if (result > 0) {
             return HmResponseUtil.success(result);
@@ -68,8 +74,7 @@ public class ElderlyResource {
             return HmResponseUtil.error("有错误");
         }
     }
-    @Autowired
-    LoginIdUtil loginIdUtil;
+
     @ApiOperation(value = "用户老人列表")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "loginId", value = "当前账号", required = false, paramType = "query", dataType = "string"),
