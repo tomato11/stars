@@ -21,6 +21,7 @@
 
 
 
+
     <select id="queryTableNameById" parameterType="String" resultType="String">
         select TABLE_NAME  from TB_SYS_ATTACHED_TAB
         where id=#{tableId}
