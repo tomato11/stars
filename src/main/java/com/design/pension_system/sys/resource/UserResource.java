@@ -69,7 +69,7 @@ public class UserResource {
 //        Cookie loginIdCookie = CookieUtil.get(request, "LOGINID");
 //        String loginId = loginIdCookie.getValue();
         String token = request.getHeader("User_Token");
-        String loginId = loginIdUtil.getLoginIdByToken(token);
+        String loginId=loginIdUtil.getLoginIdByToken(token)
         HashMap result = userService.userDetils(loginId);
         if (null != result) {
             return HmResponseUtil.success(result);
