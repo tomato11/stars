@@ -16,6 +16,6 @@ public class MvcConfigurer implements WebMvcConfigurer {
 
         registry.addInterceptor(userInterceptor)
                 .addPathPatterns("/**").excludePathPatterns("/api/sendLoginCode/**","/api/register/**","/api/loginCheck/**"
-                ,"/api/selectCommonDic/**" ,"/api/selectCommonDic/multi/**");
+                ,"/api/selectCommonDic/**" ,"/api/selectCommonDic/multi/**","/api/user/getBusinessByType/**");
     }
 }

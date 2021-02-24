@@ -125,9 +125,9 @@ public class ObjectResource {
             value = "字典表批量查询",
             notes = "根据表名查询字典表"
     )
-    @RequestMapping(
-            value = {"/selectCommonDic/multi"},
-            method = {RequestMethod.POST}
+    @PostMapping(
+            value = {"/selectCommonDic/multi"}
+
     )
 
     public ResponseEntity<?> selectDics(@RequestBody List<DicSearchVO> dicSearchVOs) {
