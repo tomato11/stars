@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,7 +76,9 @@ public class ElderlyResource {
             @ApiImplicitParam(name = "pageSize", value = "分页参数：每页数量", required = true, paramType = "query", dataType = "int"),
     })
     @GetMapping("/Elderly/list/user")
-    public ResponseEntity<Map> ElderlyListByUser(@RequestParam HashMap params) throws Exception {
+    public ResponseEntity<Map> ElderlyListByUser(@RequestParam HashMap params, HttpServletRequest request) throws Exception {
+        String loginId = request.getHeader("loginId");
+        params.put("loginId",loginId);
         PageInfo<HashMap> result = elderlyService.ElderlyListByUser(params);
         if (null != result) {
             return HmResponseUtil.success(result);

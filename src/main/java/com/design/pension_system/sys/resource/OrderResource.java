@@ -79,8 +79,10 @@ public class OrderResource {
     })
     @GetMapping("/order/list/user")
     public ResponseEntity<Map> OrderListByUser(@RequestParam HashMap params, HttpServletRequest request) throws Exception {
-        Cookie loginIdCookie = CookieUtil.get(request, "LOGINID");
-        String loginId = loginIdCookie.getValue();
+//        Cookie loginIdCookie = CookieUtil.get(request, "LOGINID");
+//        String loginId = loginIdCookie.getValue();
+
+        String loginId = request.getHeader("loginId");
         params.put("loginId",loginId);
 
         PageInfo<HashMap> result = orderService.OrderListByUser(params);

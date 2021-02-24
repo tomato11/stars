@@ -64,9 +64,9 @@ public class UserResource {
     })
     @GetMapping("/user/detils")
     public ResponseEntity<Map> userDetils( HttpServletRequest request) throws Exception {
-        Cookie loginIdCookie = CookieUtil.get(request, "LOGINID");
-        String loginId = loginIdCookie.getValue();
-
+//        Cookie loginIdCookie = CookieUtil.get(request, "LOGINID");
+//        String loginId = loginIdCookie.getValue();
+        String loginId = request.getHeader("loginId");
         HashMap result = userService.userDetils(loginId);
         if (null != result) {
             return HmResponseUtil.success(result);
