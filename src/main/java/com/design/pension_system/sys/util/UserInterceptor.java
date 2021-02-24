@@ -32,15 +32,19 @@ public class UserInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        //1.获取cookie的值
-        Cookie ticketCookie = CookieUtil.get(request, "TICKET");
 
-        if (ticketCookie == null) {
-            return false; //表示拦截
-        }
 
-        //2.获取数据
-        String ticket = ticketCookie.getValue();
+        String ticket = request.getHeader("ticket");
+
+//        //1.获取cookie的值
+//        Cookie ticketCookie = CookieUtil.get(request, "TICKET");
+//
+//        if (ticketCookie == null) {
+//            return false; //表示拦截
+//        }
+//
+//        //2.获取数据
+//        String ticket = ticketCookie.getValue();
 
         if (StringUtils.isEmpty(ticket)) {
             return false; //表示拦截
