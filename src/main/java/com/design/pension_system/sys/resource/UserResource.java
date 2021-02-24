@@ -68,6 +68,7 @@ public class UserResource {
     public ResponseEntity<Map> userDetils( HttpServletRequest request) throws Exception {
 //        Cookie loginIdCookie = CookieUtil.get(request, "LOGINID");
 //        String loginId = loginIdCookie.getValue();
+
         String token = request.getHeader("User_Token");
         String loginId=loginIdUtil.getLoginIdByToken(token);
         HashMap result = userService.userDetils(loginId);
