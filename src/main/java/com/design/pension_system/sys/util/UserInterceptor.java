@@ -5,6 +5,7 @@ import com.design.pension_system.sys.mapper.SignMapper;
 import com.design.pension_system.sys.service.SignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,7 +35,7 @@ public class UserInterceptor implements HandlerInterceptor {
             throws Exception {
 
 
-        String ticket = request.getHeader("ticket");
+        String token = request.getHeader("User_Token");
 
 //        //1.获取cookie的值
 //        Cookie ticketCookie = CookieUtil.get(request, "TICKET");
@@ -46,9 +47,11 @@ public class UserInterceptor implements HandlerInterceptor {
 //        //2.获取数据
 //        String ticket = ticketCookie.getValue();
 
-        if (StringUtils.isEmpty(ticket)) {
+        if (StringUtils.isEmpty(token)) {
             return false; //表示拦截
         }
+
+        String ticket = DigestUtils.md5DigestAsHex(token.getBytes());
 
         String falg = signMapper.checkToken(ticket);
         if (null == falg) {

@@ -3,6 +3,7 @@ package com.design.pension_system.sys.resource;
 import com.design.pension_system.sys.service.OrderService;
 import com.design.pension_system.sys.util.CookieUtil;
 import com.design.pension_system.sys.util.HmResponseUtil;
+import com.design.pension_system.sys.util.LoginIdUtil;
 import com.github.pagehelper.PageInfo;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
 import com.wordnik.swagger.annotations.ApiImplicitParams;
@@ -70,6 +71,8 @@ public class OrderResource {
         }
     }
 
+    @Autowired
+    LoginIdUtil loginIdUtil;
     @ApiOperation(value = "用户订单列表")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "loginId", value = "当前账号", required = false, paramType = "query", dataType = "string"),
@@ -82,7 +85,8 @@ public class OrderResource {
 //        Cookie loginIdCookie = CookieUtil.get(request, "LOGINID");
 //        String loginId = loginIdCookie.getValue();
 
-        String loginId = request.getHeader("loginId");
+        String token = request.getHeader("User_Token");
+        String loginId = loginIdUtil.getLoginIdByToken(token);
         params.put("loginId",loginId);
 
         PageInfo<HashMap> result = orderService.OrderListByUser(params);

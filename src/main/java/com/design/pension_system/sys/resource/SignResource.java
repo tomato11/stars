@@ -87,27 +87,6 @@ public class SignResource {
         cookie.setPath("/");         //cookie数据读取的范围
         response.addCookie(cookie);
 
-        String loginId;
-        if (StringUtils.isNotEmpty(String.valueOf(user.get("code")))) {
-            String map = signMapper.queryPhoneExist(user.get("phone"));
-
-            //查询验证码
-            loginId = signMapper.checkLoginCode(user);
-
-        } else {
-            String password = String.valueOf(user.get("password"));
-            String newPassWord = DigestUtils.md5DigestAsHex(password.getBytes());
-            user.put("passWord", newPassWord);
-            //查询密码
-            loginId = signMapper.checkPassWord(user);
-        }
-
-        //生成的是ticket信息
-        Cookie cookie1 = new Cookie("LOGINID", loginId);
-        cookie1.setMaxAge(24 * 24 * 3600); //24天有效
-        cookie1.setPath("/");         //cookie数据读取的范围
-        response.addCookie(cookie1);
-
         String url = request.getHeader("Origin");
         if (!StringUtils.isEmpty(url)) {
             String val = response.getHeader("Access-Control-Allow-Origin");

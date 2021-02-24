@@ -4,6 +4,7 @@ import com.design.pension_system.sys.service.SignService;
 import com.design.pension_system.sys.service.UserService;
 import com.design.pension_system.sys.util.CookieUtil;
 import com.design.pension_system.sys.util.HmResponseUtil;
+import com.design.pension_system.sys.util.LoginIdUtil;
 import com.github.pagehelper.PageInfo;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
 import com.wordnik.swagger.annotations.ApiImplicitParams;
@@ -56,7 +57,8 @@ public class UserResource {
             return HmResponseUtil.error("有错误");
         }
     }
-
+    @Autowired
+    LoginIdUtil loginIdUtil;
 
     @ApiOperation(value = "用户详情")
     @ApiImplicitParams(value = {
@@ -66,7 +68,8 @@ public class UserResource {
     public ResponseEntity<Map> userDetils( HttpServletRequest request) throws Exception {
 //        Cookie loginIdCookie = CookieUtil.get(request, "LOGINID");
 //        String loginId = loginIdCookie.getValue();
-        String loginId = request.getHeader("loginId");
+        String token = request.getHeader("User_Token");
+        String loginId = loginIdUtil.getLoginIdByToken(token);
         HashMap result = userService.userDetils(loginId);
         if (null != result) {
             return HmResponseUtil.success(result);

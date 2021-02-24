@@ -96,10 +96,13 @@ public class SignServiceImpl implements SignService {
 
         String ticket = UUID.randomUUID().toString();
 
-        signMapper.insertToken(ticket,loginId);
+
+        String token = DigestUtils.md5DigestAsHex(ticket.getBytes());
+
+        signMapper.insertToken(token,loginId);
 
         //用户名和ticket绑定即可!!!!!!
-        return ticket;
+        return token;
     }
 
 }

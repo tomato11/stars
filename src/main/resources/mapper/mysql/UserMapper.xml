@@ -217,5 +217,8 @@ where 1=1
     and a.login_id=#{loginId}
 </if>
     </select>
+    <select id="getLoginIdByToken" resultType="java.lang.String">
+        select  login_id from tb_token where token=#{token}
+    </select>
 
 </mapper>

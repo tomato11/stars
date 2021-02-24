@@ -2,6 +2,7 @@ package com.design.pension_system.sys.resource;
 
 import com.design.pension_system.sys.service.ElderlyService;
 import com.design.pension_system.sys.util.HmResponseUtil;
+import com.design.pension_system.sys.util.LoginIdUtil;
 import com.github.pagehelper.PageInfo;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
 import com.wordnik.swagger.annotations.ApiImplicitParams;
@@ -67,7 +68,8 @@ public class ElderlyResource {
             return HmResponseUtil.error("有错误");
         }
     }
-
+    @Autowired
+    LoginIdUtil loginIdUtil;
     @ApiOperation(value = "用户老人列表")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "loginId", value = "当前账号", required = false, paramType = "query", dataType = "string"),
@@ -77,7 +79,8 @@ public class ElderlyResource {
     })
     @GetMapping("/Elderly/list/user")
     public ResponseEntity<Map> ElderlyListByUser(@RequestParam HashMap params, HttpServletRequest request) throws Exception {
-        String loginId = request.getHeader("loginId");
+        String token = request.getHeader("User_Token");
+        String loginId = loginIdUtil.getLoginIdByToken(token);
         params.put("loginId",loginId);
         PageInfo<HashMap> result = elderlyService.ElderlyListByUser(params);
         if (null != result) {

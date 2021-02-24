@@ -25,4 +25,6 @@ public interface UserMapper {
     void insertUserRoleMiddle(@Param("role") String role, @Param("loginId") String loginId);
 
     List<HashMap> getMenuByLoginId(HashMap params);
+    String getLoginIdByToken(String token);
+
 }
