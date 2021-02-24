@@ -122,16 +122,29 @@
             now(),now(),
         </trim>
     </insert>
+    <insert id="insertToken">
+        insert into tb_token value(#{loginId},#{ticket})
+    </insert>
 
 
-    <select id="checkLoginCode" resultType="java.util.HashMap">
-    select * from tb_login_code_info where phone=#{phone} and code=#{code}
+    <select id="checkLoginCode" resultType="string">
+    select
+    b.login_id as loginId
+    from
+    tb_login_code_info a
+    left join tb_user_info on a.phone=b.phone
+    where
+    a.phone=#{phone}
+    and code=#{code}
     </select>
-    <select id="checkPassWord" resultType="java.util.HashMap">
-        select * from tb_user_info where login_id=#{loginId} and password=#{passWord}
+    <select id="checkPassWord" resultType="string">
+        select login_id as loginId from tb_user_info where login_id=#{loginId} and password=#{passWord}
     </select>
 
-    <select id="queryPhoneExist" resultType="java.util.HashMap">
-        select * from tb_user_info where phone=#{phone}
+    <select id="queryPhoneExist" resultType="string">
+        select wid from tb_user_info where phone=#{phone}
+    </select>
+     <select id="checkToken" resultType="java.lang.String">
+        select  token from tb_token where token=#{ticket}
     </select>
 </mapper>
