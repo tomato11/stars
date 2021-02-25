@@ -7,7 +7,7 @@
         </selectKey>
         insert into tb_order_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="wid != null and wid ！= ''">
+            <if test="wid != null and wid  != ''">
                 wid,
             </if>
             <if test="mainId != null and mainId != ''">
@@ -41,7 +41,7 @@
             UPDATE_TIME
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="wid != null and wid ！= ''">
+            <if test="wid != null and wid  != ''">
                 #{wid} ,
             </if>
             <if test="mainId != null and mainId != ''">

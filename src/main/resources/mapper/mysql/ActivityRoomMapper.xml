@@ -7,62 +7,62 @@
         </selectKey>
         insert into tb_activity_room_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="wid != null and wid ！= ''">
+            <if test="wid != null and wid  != ''">
                 wid,
             </if>
-            <if test="NAME != null and NAME ！= ''">
+            <if test="NAME != null and NAME  != ''">
                 NAME,
             </if>
-            <if test="TYPE != null and TYPE ！= ''">
+            <if test="TYPE != null and TYPE  != ''">
                 TYPE,
             </if>
-            <if test="REGION != null and REGION ！= ''">
+            <if test="REGION != null and REGION  != ''">
                 REGION,
             </if>
-            <if test="ADDRESS != null and ADDRESS ！= ''">
+            <if test="ADDRESS != null and ADDRESS  != ''">
                 ADDRESS,
             </if>
-            <if test="COST != null and COST ！= ''">
+            <if test="COST != null and COST  != ''">
                 COST,
             </if>
-            <if test="AREA != null and AREA ！= ''">
+            <if test="AREA != null and AREA  != ''">
                 AREA,
             </if>
-            <if test="starTime != null and startTime ！= ''">
+            <if test="starTime != null and startTime  != ''">
                 START_TIME,
             </if>
-            <if test="endTime != null and endTime ！= ''">
+            <if test="endTime != null and endTime  != ''">
                 END_TIME,
             </if>
             CREATE_TIME,
             UPDATE_TIME
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="wid != null and wid ！= ''">
+            <if test="wid != null and wid  != ''">
                 #{wid},
             </if>
-            <if test="NAME != null and NAME ！= ''">
+            <if test="NAME != null and NAME  != ''">
                 #{name},
             </if>
-            <if test="TYPE != null and TYPE ！= ''">
+            <if test="TYPE != null and TYPE  != ''">
                 #{type},
             </if>
-            <if test="REGION != null and REGION ！= ''">
+            <if test="REGION != null and REGION  != ''">
                 #{region},
             </if>
-            <if test="ADDRESS != null and ADDRESS ！= ''">
+            <if test="ADDRESS != null and ADDRESS  != ''">
                 #{address},
             </if>
-            <if test="COST != null and COST ！= ''">
+            <if test="COST != null and COST  != ''">
                 #{cost},
             </if>
-            <if test="AREA != null and AREA ！= ''">
+            <if test="AREA != null and AREA  != ''">
                 #{area},
             </if>
-            <if test="starTime != null and startTime ！= ''">
+            <if test="starTime != null and startTime  != ''">
                 #{startTime},
             </if>
-            <if test="endTime != null and endTime ！= ''">
+            <if test="endTime != null and endTime  != ''">
                 #{endTime},
             </if>
 
@@ -75,28 +75,28 @@
     <update id="updateActivityRoom">
         update tb_activity_room_info
         <set>
-            <if test="name != null and name ！= ''">
+            <if test="name != null and name  != ''">
                 name= #{name},
             </if>
-            <if test="type != null and type ！= ''">
+            <if test="type != null and type  != ''">
                 type= #{type},
             </if>
-            <if test="region != null and region ！= ''">
+            <if test="region != null and region  != ''">
                 region= #{region},
             </if>
-            <if test="address != null and address ！= ''">
+            <if test="address != null and address  != ''">
                 address= #{address},
             </if>
-            <if test="cost != null and cost ！= ''">
+            <if test="cost != null and cost  != ''">
                 cost= #{cost},
             </if>
-            <if test="area != null and area ！= ''">
+            <if test="area != null and area  != ''">
                 area= #{area},
             </if>
-            <if test="starTime != null and startTime ！= ''">
+            <if test="starTime != null and startTime  != ''">
                 star_time= #{startTime},
             </if>
-            <if test="endTime != null and endTime ！= ''">
+            <if test="endTime != null and endTime  != ''">
                 END_TIME = #{endTime},
             </if>
             update_time=now(),

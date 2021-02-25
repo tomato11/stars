@@ -9,38 +9,38 @@
         </selectKey>
         insert into tb_Forum_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="wid != null and wid ！= ''">
+            <if test="wid != null and wid  != ''">
                 wid,
             </if>
-            <if test="mainId != null and mainId ！= ''">
+            <if test="mainId != null and mainId  != ''">
                 MAIN_ID,
             </if>
-            <if test="TITLE != null and TITLE ！= ''">
+            <if test="TITLE != null and TITLE  != ''">
                 TITLE,
             </if>
-            <if test="TYPE != null and TYPE ！= ''">
+            <if test="TYPE != null and TYPE  != ''">
                 TYPE,
             </if>
-            <if test="DESCRIBE != null and DESCRIBE ！= ''">
+            <if test="DESCRIBE != null and DESCRIBE  != ''">
                 DESCRIBE,
             </if>
             CREATE_TIME,
             UPDATE_TIME
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="wid != null and wid ！= ''">
+            <if test="wid != null and wid  != ''">
                 #{wid},
             </if>
-            <if test="mainId != null and mainId ！= ''">
+            <if test="mainId != null and mainId  != ''">
                 #{mainId},
             </if>
-            <if test="TITLE != null and TITLE ！= ''">
+            <if test="TITLE != null and TITLE  != ''">
                 #{TITLE},
             </if>
-            <if test="TYPE != null and TYPE ！= ''">
+            <if test="TYPE != null and TYPE  != ''">
                 #{TYPE},
             </if>
-            <if test="DESCRIBE != null and DESCRIBE ！= ''">
+            <if test="DESCRIBE != null and DESCRIBE  != ''">
                 #{DESCRIBE},
             </if>
             now(),now(),
@@ -49,16 +49,16 @@
     <update id="updateForum">
         update tb_Forum_info
         <set>
-            <if test="mainId != null and mainId ！= ''">
+            <if test="mainId != null and mainId  !=''">
                 MAIN_ID= #{mainId},
             </if>
-            <if test="TITLE != null and TITLE ！= ''">
+            <if test="TITLE != null and TITLE  != ''">
                 TITLE= #{TITLE},
             </if>
-            <if test="TYPE != null and TYPE ！= ''">
+            <if test="TYPE != null and TYPE  != ''">
                 TYPE= #{TYPE},
             </if>
-            <if test="DESCRIBE != null and DESCRIBE ！= ''">
+            <if test="DESCRIBE != null and DESCRIBE  != ''">
                 DESCRIBE= #{DESCRIBE},
             </if>
             update_time=now(),
