@@ -9,69 +9,69 @@
         </selectKey>
         insert into tb_activity_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="wid != null and wid  != ''">
+            <if test="wid !=null and wid!=''">
                 wid,
             </if>
-            <if test="name != null and name  != ''">
+            <if test="name != null and name!=''">
                 NAME,
             </if>
-            <if test="type != null and type  != ''">
+            <if test="type != null and type!=''">
                 TYPE,
             </if>
-            <if test="region != null and region  != ''">
+            <if test="region != null and region!=''">
                 REGION,
             </if>
-            <if test="address != null and address  != ''">
+            <if test="address != null and address!=''">
                 ADDRESS,
             </if>
-            <if test="cost != null and cost  != ''">
+            <if test="cost != null and cost!=''">
                 COST,
             </if>
-            <if test="startTime != null and startTime  != ''">
+            <if test="startTime != null and startTime!=''">
                 START_TIME,
             </if>
-            <if test="endTime != null and endTime  != ''">
+            <if test="endTime != null and endTime!=''">
                 END_TIME,
             </if>
-            <if test="number != null and number  != ''">
+            <if test="number != null and number!=''">
                 NUMBER,
             </if>
-            <if test="remark != null and remark  != ''">
+            <if test="remark != null and remark!=''">
                 REMARK,
             </if>
             CREATE_TIME,
             UPDATE_TIME
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="wid != null and wid  != ''">
+            <if test="wid != null and wid!=''">
                 #{wid},
             </if>
-            <if test="name != null and name  != ''">
+            <if test="name != null and name!=''">
                 #{name},
             </if>
-            <if test="type != null and type  != ''">
+            <if test="type != null and type!=''">
                 #{type},
             </if>
-            <if test="region != null and region  != ''">
+            <if test="region != null and region!=''">
                 #{region},
             </if>
-            <if test="address != null and address  != ''">
+            <if test="address != null and address!=''">
                 #{address},
             </if>
-            <if test="cost != null and cost  != ''">
+            <if test="cost != null and cost!=''">
                 #{cost},
             </if>
 
-            <if test="starTime != null and startTime  != ''">
+            <if test="starTime != null and startTime!=''">
                 #{startTime},
             </if>
-            <if test="endTime != null and endTime  != ''">
+            <if test="endTime != null and endTime!=''">
                 #{endTime},
             </if>
-            <if test="number != null and number  != ''">
+            <if test="number != null and number!=''">
                 #{number},
             </if>
-            <if test="remark != null and remark  != ''">
+            <if test="remark != null and remark!=''">
                 #{remark},
             </if>
             now(),now(),
@@ -82,32 +82,32 @@
     <update id="updateActivity">
         update tb_activity_info
         <set>
-            <if test="name != null and name  != ''">
+            <if test="name != null and name!=''">
                 name= #{name},
             </if>
-            <if test="type != null and type  != ''">
+            <if test="type != null and type!=''">
                 type= #{type},
             </if>
-            <if test="region != null and region  != ''">
+            <if test="region != null and region!=''">
                 region= #{region},
             </if>
-            <if test="address != null and address  != ''">
+            <if test="address != null and address!=''">
                 address= #{address},
             </if>
-            <if test="cost != null and cost  != ''">
+            <if test="cost != null and cost!=''">
                 cost= #{cost},
             </if>
 
-            <if test="starTime != null and startTime  != ''">
+            <if test="starTime != null and startTime!=''">
                 star_time= #{startTime},
             </if>
-            <if test="endTime != null and endTime  != ''">
+            <if test="endTime != null and endTime!=''">
                 end_time = #{endTime},
             </if>
-            <if test="number != null and number  != ''">
+            <if test="number != null and number!=''">
                 number = #{number},
             </if>
-            <if test="remark != null and remark  != ''">
+            <if test="remark != null and remark!=''">
                 remark = #{remark},
             </if>
             update_time=now(),
@@ -202,4 +202,4 @@
         order by CREATE_TIME desc, CONVERT( a.name USING gbk )
 
     </select>
-</mapper>,
+</mapper>
