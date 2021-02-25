@@ -147,4 +147,10 @@
      <select id="checkToken" resultType="java.lang.String">
         select  token from tb_token where token=#{ticket}
     </select>
+    <select id="checkLoginId" resultType="java.lang.Object">
+        select * from tb_user_info where login_id=#{loginId}
+    </select>
+    <select id="checkPhone" resultType="java.lang.Object">
+         select * from tb_user_info where phone=#{phone}
+    </select>
 </mapper>

@@ -16,4 +16,8 @@ public interface SignService {
     int userRegister(HashMap param );
 
     String findUserByUP(HashMap user);
+
+    Boolean checkLoginId(String loginId);
+
+    Boolean checkPhone(String phone);
 }

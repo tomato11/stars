@@ -71,6 +71,16 @@ public class SignServiceImpl implements SignService {
     }
 
     @Override
+    public Boolean checkLoginId(String loginId) {
+        return null==signMapper.checkLoginId(loginId)?true:false;//没有返回true
+    }
+
+    @Override
+    public Boolean checkPhone(String phone) {
+        return null==signMapper.checkPhone(phone)?true:false;//没有返回true
+    }
+
+    @Override
     public String findUserByUP(HashMap params) {
         String loginId;
         if (StringUtils.isNotEmpty(String.valueOf(params.get("code")))) {

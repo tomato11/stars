@@ -59,6 +59,22 @@ public class SignResource {
     }
 
 
+    @ApiOperation(value = "校验用户账号是否存在")
+    @GetMapping("/checkLoginId")
+    public ResponseEntity<Map> checkLoginId(@RequestParam("loginId") String loginId) throws Exception {
+        Boolean result = signService.checkLoginId(loginId);
+        return HmResponseUtil.success(result);
+
+    }
+
+    @ApiOperation(value = "校验用户手机号是否存在")
+    @GetMapping("/checkPhone")
+    public ResponseEntity<Map> checkPhone(@RequestParam("phone") String phone) throws Exception {
+        Boolean result = signService.checkPhone(phone);
+        return HmResponseUtil.success(result);
+
+    }
+
     @ApiOperation(value = "登陆校验")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "phone", value = "手机号", required = false, paramType = "query", dataType = "string"),
@@ -67,7 +83,7 @@ public class SignResource {
             @ApiImplicitParam(name = "password", value = "密码", required = false, paramType = "query", dataType = "string"),
     })
     @GetMapping("/loginCheck")
-    public ResponseEntity<Map> doLogin(@RequestParam HashMap user, HttpServletResponse response,HttpServletRequest request) {
+    public ResponseEntity<Map> doLogin(@RequestParam HashMap user, HttpServletResponse response, HttpServletRequest request) {
         //获取userIP
 
         String ticket = signService.findUserByUP(user);

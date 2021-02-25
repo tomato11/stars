@@ -17,4 +17,8 @@ public interface SignMapper {
     void insertToken(@Param("ticket") String ticket, @Param("loginId") String loginId);
 
     String checkToken(String ticket);
+
+    Object checkLoginId(String loginId);
+
+    Object checkPhone(String phone);
 }

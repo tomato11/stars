@@ -45,10 +45,9 @@
             b.is_leaf as isLeaf_two,
             c.is_leaf as isLeaf_three
             FROM
-            v_dic_article_xzqh a
-            LEFT JOIN v_dic_article_xzqh b ON a.id = b.parent_id
-            LEFT JOIN v_dic_article_xzqh c ON b.id = c.parent_id
-
+            tb_dic_xj_xzqh a
+            LEFT JOIN tb_dic_xj_xzqh b ON a.id = b.parent_id
+            LEFT JOIN tb_dic_xj_xzqh c ON b.id = c.parent_id
         </select>
 
     <select id="selectAll" parameterType="map" resultMap="BaseResultMap">

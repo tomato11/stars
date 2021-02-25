@@ -15,8 +15,10 @@ public class MvcConfigurer implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
 
         registry.addInterceptor(userInterceptor)
-                .addPathPatterns("/**").excludePathPatterns("/api/sendLoginCode/**","/api/register/**","/api/loginCheck/**"
-                ,"/api/selectCommonDic/**" ,"/api/selectCommonDic/multi/**","/api/user/getBusinessByType/**",
-                "/api/xzqh/tree/**");
+                .addPathPatterns("/**").excludePathPatterns(
+                "/api/sendLoginCode/**","/api/register/**","/api/loginCheck/**"
+                ,"/api/selectCommonDic/**" ,"/api/selectCommonDic/multi/**",
+                "/api/user/getBusinessByType/**",
+                "/api/xzqh/tree/**","/api/upload/**","/api/checkPhone/**","/api/checkLoginId/**");
     }
 }
