@@ -7,7 +7,7 @@
         </selectKey>
         insert into tb_user_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="wid != null and wid ! = ''">
+            <if test="wid != null and wid != ''">
                 wid,
             </if>
             <if test="loginId != null and loginId != ''">
@@ -65,7 +65,7 @@
             UPDATE_TIME
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="wid != null and wid ! = ''">
+            <if test="wid != null and wid != '' ">
                 #{wid},
             </if>
             <if test="loginId != null and loginId != ''">

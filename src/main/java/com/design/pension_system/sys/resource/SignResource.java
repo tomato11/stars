@@ -50,6 +50,7 @@ public class SignResource {
     @ApiOperation(value = "注册用户")
     @PostMapping("/register")
     public ResponseEntity<Map> userRegister(@RequestBody HashMap param) throws Exception {
+
         int result = signService.userRegister(param);
         if (result > 0) {
             return HmResponseUtil.success(result);
