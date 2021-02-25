@@ -34,8 +34,8 @@
             <if test="workingTime != null and workingTime != ''">
                 WORKING_TIME=#{workingTime},
             </if>
-            <if test="COST != null and COST != ''">
-                COST=#{COST},
+            <if test="cost != null and cost != ''">
+                COST=#{cost},
             </if>
             <if test="illnessHistory != null and illnessHistory != ''">
                 ILLNESS_HISTORY=#{illnessHistory},
@@ -52,8 +52,8 @@
             <if test="number != null and number != ''">
                 NUMBER=#{number},
             </if>
-            <if test="REGION != null and REGION != ''">
-                REGION=#{REGION},
+            <if test="region != null and region != ''">
+                REGION=#{region},
             </if>
             <if test="address != null and address != ''">
                 ADDRESS=#{address},

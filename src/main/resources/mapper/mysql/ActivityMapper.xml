@@ -33,10 +33,10 @@
             <if test="endTime != null and endTime  != ''">
                 END_TIME,
             </if>
-            <if test="number != null and NUMBER  != ''">
+            <if test="number != null and number  != ''">
                 NUMBER,
             </if>
-            <if test="remark != null and REMARK  != ''">
+            <if test="remark != null and remark  != ''">
                 REMARK,
             </if>
             CREATE_TIME,
@@ -46,19 +46,19 @@
             <if test="wid != null and wid  != ''">
                 #{wid},
             </if>
-            <if test="NAME != null and NAME  != ''">
+            <if test="name != null and name  != ''">
                 #{name},
             </if>
-            <if test="TYPE != null and TYPE  != ''">
+            <if test="type != null and type  != ''">
                 #{type},
             </if>
-            <if test="REGION != null and REGION  != ''">
+            <if test="region != null and region  != ''">
                 #{region},
             </if>
-            <if test="ADDRESS != null and ADDRESS  != ''">
+            <if test="address != null and address  != ''">
                 #{address},
             </if>
-            <if test="COST != null and COST  != ''">
+            <if test="cost != null and cost  != ''">
                 #{cost},
             </if>
 
@@ -71,7 +71,7 @@
             <if test="number != null and number  != ''">
                 #{number},
             </if>
-            <if test="REMARK != null and REMARK  != ''">
+            <if test="remark != null and remark  != ''">
                 #{remark},
             </if>
             now(),now(),

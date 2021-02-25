@@ -15,13 +15,13 @@
             <if test="mainId != null and mainId  != ''">
                 MAIN_ID,
             </if>
-            <if test="TITLE != null and TITLE  != ''">
+            <if test="title != null and title  != ''">
                 TITLE,
             </if>
-            <if test="TYPE != null and TYPE  != ''">
+            <if test="type != null and type  != ''">
                 TYPE,
             </if>
-            <if test="DESCRIBE != null and DESCRIBE  != ''">
+            <if test="describe != null and describe  != ''">
                 DESCRIBE,
             </if>
             CREATE_TIME,
@@ -34,14 +34,14 @@
             <if test="mainId != null and mainId  != ''">
                 #{mainId},
             </if>
-            <if test="TITLE != null and TITLE  != ''">
-                #{TITLE},
+            <if test="title != null and title  != ''">
+                #{title},
             </if>
-            <if test="TYPE != null and TYPE  != ''">
-                #{TYPE},
+            <if test="type != null and type  != ''">
+                #{type},
             </if>
-            <if test="DESCRIBE != null and DESCRIBE  != ''">
-                #{DESCRIBE},
+            <if test="describe != null and describe  != ''">
+                #{describe},
             </if>
             now(),now(),
         </trim>
@@ -52,14 +52,14 @@
             <if test="mainId != null and mainId  !=''">
                 MAIN_ID= #{mainId},
             </if>
-            <if test="TITLE != null and TITLE  != ''">
-                TITLE= #{TITLE},
+            <if test="title != null and title  != ''">
+                TITLE= #{title},
             </if>
-            <if test="TYPE != null and TYPE  != ''">
-                TYPE= #{TYPE},
+            <if test="type != null and type  != ''">
+                TYPE= #{type},
             </if>
-            <if test="DESCRIBE != null and DESCRIBE  != ''">
-                DESCRIBE= #{DESCRIBE},
+            <if test="describe != null and describe  != ''">
+                DESCRIBE= #{describe},
             </if>
             update_time=now(),
         </set>

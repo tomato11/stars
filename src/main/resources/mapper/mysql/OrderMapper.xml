@@ -16,16 +16,16 @@
             <if test="elderlyId != null and elderlyId != ''">
                 ELDERLY_ID,
             </if>
-            <if test="TYPE != null and TYPE != ''">
+            <if test="type != null and type != ''">
                 TYPE,
             </if>
-            <if test="STATUS != null and STATUS != ''">
+            <if test="status != null and status != ''">
                 STATUS,
             </if>
-            <if test="REASON != null and REASON != ''">
+            <if test="reason != null and reason != ''">
                 REASON,
             </if>
-            <if test="SCORE != null and SCORE != ''">
+            <if test="score != null and score != ''">
                 SCORE,
             </if>
             <if test="startTime != null and startTime != ''">
@@ -50,16 +50,16 @@
             <if test="elderlyId != null and elderlyId != ''">
                 #{elderlyId},
             </if>
-            <if test="TYPE != null and TYPE != ''">
+            <if test="type != null and type != ''">
                 #{type},
             </if>
-            <if test="STATUS != null and STATUS != ''">
+            <if test="status != null and status != ''">
                 #{status} ,
             </if>
-            <if test="REASON != null and REASON != ''">
+            <if test="reason != null and reason != ''">
                 #{reason},
             </if>
-            <if test="SCORE != null and SCORE != ''">
+            <if test="score != null and score != ''">
                 #{score},
             </if>
             <if test="startTime != null and startTime != ''">
@@ -84,16 +84,16 @@
             <if test="elderlyId != null and elderlyId != ''">
                 elderly_Id= #{elderlyId},
             </if>
-            <if test="TYPE != null and TYPE != ''">
+            <if test="type != null and type != ''">
                 TYPE= #{type},
             </if>
-            <if test="STATUS != null and STATUS != ''">
+            <if test="status != null and status != ''">
                 STATUS= #{status} ,
             </if>
-            <if test="REASON != null and REASON != ''">
+            <if test="reason != null and reason != ''">
                 REASON= #{reason},
             </if>
-            <if test="SCORE != null and SCORE != ''">
+            <if test="score != null and score != ''">
                 SCORE= #{score},
             </if>
             <if test="startTime != null and startTime != ''">

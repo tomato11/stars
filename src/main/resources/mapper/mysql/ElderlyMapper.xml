@@ -105,8 +105,8 @@
             <if test="number != null and number != ''">
                 number= #{number},
             </if>
-            <if test="REGION != null and REGION != ''">
-                REGION= #{REGION},
+            <if test="region != null and region != ''">
+                REGION= #{region},
             </if>
             <if test="address != null and address != ''">
                 address= #{address},
