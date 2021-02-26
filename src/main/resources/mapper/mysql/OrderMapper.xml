@@ -35,7 +35,7 @@
                 END_TIME,
             </if>
             <if test="describe != null and describe != ''">
-                describe,
+                `DESCRIBE`,
             </if>
             CREATE_TIME,
             UPDATE_TIME
@@ -77,7 +77,6 @@
     <update id="updateOrder">
         update tb_Order_info
         <set>
-
             <if test="mainId != null and mainId != ''">
                 main_id=#{mainId},
             </if>
@@ -97,13 +96,13 @@
                 SCORE= #{score},
             </if>
             <if test="startTime != null and startTime != ''">
-                startTime= #{startTime},
+                start_time= #{startTime},
             </if>
             <if test="endTime != null and endTime != ''">
-                endTime= #{endTime},
+                end_time= #{endTime},
             </if>
             <if test="describe != null and describe != ''">
-                describe= #{describe},
+                `describe`= #{describe},
             </if>
              <if test="evaluate != null and evaluate != ''">
                  EVALUATE= #{evaluate},
@@ -137,8 +136,8 @@
         ) AS age,
         a. STATUS AS `status`,
         c. NAME AS statusName,
-        START_TIME AS startTime,
-        END_TIME AS endTime,
+        date_format(START_TIME,'%Y-%m-%d %H:%i') AS startTime,
+        date_format(END_TIME,'%Y-%m-%d %H:%i') AS endTime,
         CONCAT(
         DATE_FORMAT(
         START_TIME,
@@ -147,7 +146,7 @@
         '至',
         DATE_FORMAT(END_TIME, '%Y-%m-%d %H:%i')
         ) AS serviceTime,
-        a.CREATE_TIME AS createTime,
+        date_format(a.CREATE_TIME,'%Y-%m-%d %H:%i') AS createTime,
         f.full_name AS regionName
         FROM
         tb_Order_info a

@@ -43,26 +43,26 @@
             UPDATE_TIME
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="wid != null and wid!=''">
+            <if test="wid!=null and wid!=''">
                 #{wid},
             </if>
-            <if test="name != null and name!=''">
+            <if test="name!=null and name!=''">
                 #{name},
             </if>
-            <if test="type != null and type!=''">
+            <if test="type!=null and type!=''">
                 #{type},
             </if>
-            <if test="region != null and region!=''">
+            <if test="region!=null and region!=''">
                 #{region},
             </if>
-            <if test="address != null and address!=''">
+            <if test="address!=null and address!=''">
                 #{address},
             </if>
-            <if test="cost != null and cost!=''">
+            <if test="cost!=null and cost!=''">
                 #{cost},
             </if>
 
-            <if test="starTime != null and startTime!=''">
+            <if test="startTime!=null and startTime!=''">
                 #{startTime},
             </if>
             <if test="endTime != null and endTime!=''">
@@ -71,7 +71,7 @@
             <if test="number != null and number!=''">
                 #{number},
             </if>
-            <if test="remark != null and remark!=''">
+            <if test="remark!= null and remark!=''">
                 #{remark},
             </if>
             now(),now(),
@@ -98,7 +98,7 @@
                 cost= #{cost},
             </if>
 
-            <if test="starTime != null and startTime!=''">
+            <if test="startTime != null and startTime!=''">
                 star_time= #{startTime},
             </if>
             <if test="endTime != null and endTime!=''">
@@ -124,8 +124,10 @@
         type,
         b.`NAME` AS typeName,
         cost,
-        CONCAT(START_TIME, '~', END_TIME) AS activityTime,
-        UPDATE_TIME AS updateTime,
+        DATE_FORMAT(START_TIME,'%Y-%m-%d') as startTime,
+        DATE_FORMAT(END_TIME,'%Y-%m-%d') as endTime,
+        CONCAT(DATE_FORMAT(START_TIME,'%Y-%m-%d'), '~', DATE_FORMAT(END_TIME,'%Y-%m-%d')) AS activityTime,
+        date_format(UPDATE_TIME,'%Y-%m-%d %H:%i') AS updateTime,
         a.region,
         c.full_name as regionName
         FROM
@@ -157,10 +159,12 @@
         a.REGION AS region,
         a.ADDRESS AS address,
         cost,
-        CONCAT(START_TIME, '~', END_TIME) AS activityTime,
+         DATE_FORMAT(START_TIME,'%Y-%m-%d') as startTime,
+        DATE_FORMAT(END_TIME,'%Y-%m-%d') as endTime,
+        CONCAT(DATE_FORMAT(START_TIME,'%Y-%m-%d'), '~', DATE_FORMAT(END_TIME,'%Y-%m-%d')) AS activityTime,
         number,
         remark,
-        UPDATE_TIME AS updateTime,
+        date_format(UPDATE_TIME,'%Y-%m-%d %H:%i') AS updateTime,
         c.full_name as regionName
         FROM
         tb_activity_info a
@@ -181,8 +185,10 @@
         wid,
         a. NAME AS `name`,
         cost,
-        CONCAT(START_TIME, '至', END_TIME) AS activityTime,
-        UPDATE_TIME AS updateTime,
+        DATE_FORMAT(START_TIME,'%Y-%m-%d') as startTime,
+        DATE_FORMAT(END_TIME,'%Y-%m-%d') as endTime,
+        CONCAT(DATE_FORMAT(START_TIME,'%Y-%m-%d'), '~', DATE_FORMAT(END_TIME,'%Y-%m-%d')) AS activityTime,
+       date_format(UPDATE_TIME,'%Y-%m-%d %H:%i')  AS updateTime,
         a.region,b.full_name as regionName
         FROM
         tb_activity_info a

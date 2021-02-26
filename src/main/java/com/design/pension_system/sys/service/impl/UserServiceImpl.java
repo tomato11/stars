@@ -104,6 +104,14 @@ public class UserServiceImpl implements UserService {
         HmServiceUtil.checkPageParams(params);
         PageHelper.startPage(params);
         List<HashMap> hashMaps = userMapper.businessList(params);
+
+        if(null!=hashMaps&&hashMaps.size()>0){
+            for (int i = 0; i < hashMaps.size(); i++) {
+                HashMap hashMap = hashMaps.get(i);
+                List<HashMap> photoList = objectService.queryPhotoByMainId((String) hashMap.get("wid"), userPhoneId);
+                hashMap.put("userPhoto",photoList);
+            }
+        }
         return new PageInfo<HashMap>(hashMaps);
     }
 

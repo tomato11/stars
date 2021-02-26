@@ -25,6 +25,7 @@ public class OrderResource {
     @ApiOperation(value = "新增订单")
     @PostMapping("/order")
     public ResponseEntity<Map> insertOrder(@RequestBody HashMap param) throws Exception {
+
         int result = orderService.insertOrder(param);
         if (result > 0) {
             return HmResponseUtil.success(result);

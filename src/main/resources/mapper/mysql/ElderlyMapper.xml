@@ -72,7 +72,7 @@
             <if test="number != null and number != ''">
                 #{number},
             </if>
-            <if test="REGION != null and REGION != ''">
+            <if test="region != null and region != ''">
                 #{REGION},
             </if>
             <if test="address != null and address != ''">
@@ -152,7 +152,7 @@
         SELECT
         wid,
         a. NAME AS `name`,
-        BIRTH_DATE AS birthDate,
+        date_format(BIRTH_DATE,'%Y-%m-%d') AS birthDate,
         phone,
         region,
         TIMESTAMPDIFF(

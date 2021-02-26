@@ -37,27 +37,27 @@ public class ActivityRoomServiceImpl implements ActivityRoomService {
     @Autowired
     private ObjectService objectService;
 
-    private String activityPhoneId = "03";
+    private String activityRoomPhotoId = "03";
 
     @Override
     public int insertActivityRoom(HashMap param) {
         int i = activityRoomMapper.insertActivityRoom(param);
         String wid = (String) param.get("wid");
-        objectService.savePhoto((List<HashMap>) param.get("activityRoomPhoto"), wid,activityPhoneId);
+        objectService.savePhoto((List<HashMap>) param.get("activityRoomPhoto"), wid,activityRoomPhotoId);
         return i;
     }
 
     @Override
     public int updateActivityRoom(HashMap param) {
         int i = activityRoomMapper.updateActivityRoom(param);
-        objectService.savePhoto((List<HashMap>) param.get("activityRoomPhoto"), (String) param.get("wid"),activityPhoneId);
+        objectService.savePhoto((List<HashMap>) param.get("activityRoomPhoto"), (String) param.get("wid"),activityRoomPhotoId);
         return i;
     }
 
     @Override
     public int deleteActivityRoom(String wid) {
         int i = activityRoomMapper.deleteActivityRoom(wid);
-        objectService.deletePhoto(wid,activityPhoneId);
+        objectService.deletePhoto(wid,activityRoomPhotoId);
         return i;
     }
 
@@ -66,6 +66,13 @@ public class ActivityRoomServiceImpl implements ActivityRoomService {
         HmServiceUtil.checkPageParams(params);
         PageHelper.startPage(params);
         List<HashMap> hashMaps = activityRoomMapper.activityRoomList(params);
+        if(null!=hashMaps&&hashMaps.size()>0){
+            for (int i = 0; i < hashMaps.size(); i++) {
+                HashMap hashMap = hashMaps.get(i);
+                List<HashMap> photoList = objectService.queryPhotoByMainId((String) hashMap.get("wid"), activityRoomPhotoId);
+                hashMap.put("activityRoomPhoto",photoList);
+            }
+        }
         return new PageInfo<HashMap>(hashMaps);
 
     }
@@ -73,7 +80,7 @@ public class ActivityRoomServiceImpl implements ActivityRoomService {
     @Override
     public HashMap activityRoomDetails(String wid) {
         HashMap map = activityRoomMapper.activityRoomDetails(wid);
-        List<HashMap> hashMaps = objectService.queryPhotoByMainId(wid,activityPhoneId);
+        List<HashMap> hashMaps = objectService.queryPhotoByMainId(wid,activityRoomPhotoId);
         map.put("activityRoomPhoto",hashMaps);
         return map;
     }

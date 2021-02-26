@@ -28,7 +28,13 @@
     </select>
     <select id="queryPhotoByMainId" resultType="java.util.HashMap">
           select
-        *
+        UID as uid,
+        WID as wid,
+        MAIN_ID as mainId,
+        CREATE_TIME as createTime,
+        UPDATE_TIME as updateTime,
+        URL as url,
+        NAME as name
         from ${tableName}
         where main_id=#{mainId}
     </select>

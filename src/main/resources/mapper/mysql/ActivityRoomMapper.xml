@@ -28,7 +28,7 @@
             <if test="area != null and area  != ''">
                 AREA,
             </if>
-            <if test="starTime != null and startTime  != ''">
+            <if test="startTime != null and startTime  != ''">
                 START_TIME,
             </if>
             <if test="endTime != null and endTime  != ''">
@@ -59,7 +59,7 @@
             <if test="area != null and area  != ''">
                 #{area},
             </if>
-            <if test="starTime != null and startTime  != ''">
+            <if test="startTime != null and startTime  != ''">
                 #{startTime},
             </if>
             <if test="endTime != null and endTime  != ''">
@@ -75,28 +75,28 @@
     <update id="updateActivityRoom">
         update tb_activity_room_info
         <set>
-            <if test="name != null and name  != ''">
+            <if test="name != null and name!= ''">
                 name= #{name},
             </if>
-            <if test="type != null and type  != ''">
+            <if test="type != null and type!= ''">
                 type= #{type},
             </if>
-            <if test="region != null and region  != ''">
+            <if test="region != null and region!= ''">
                 region= #{region},
             </if>
-            <if test="address != null and address  != ''">
+            <if test="address != null and address != ''">
                 address= #{address},
             </if>
-            <if test="cost != null and cost  != ''">
+            <if test="cost != null and cost != ''">
                 cost= #{cost},
             </if>
-            <if test="area != null and area  != ''">
+            <if test="area != null and area != ''">
                 area= #{area},
             </if>
-            <if test="starTime != null and startTime  != ''">
+            <if test="startTime != null and startTime != ''">
                 star_time= #{startTime},
             </if>
-            <if test="endTime != null and endTime  != ''">
+            <if test="endTime != null and endTime != ''">
                 END_TIME = #{endTime},
             </if>
             update_time=now(),
@@ -116,8 +116,10 @@
         REGION AS region,
         area,
         COST AS cost,
-        UPDATE_TIME AS updateTime,
-        concat(a.start_time,'~',end_time) as businessTime,
+        date_format(UPDATE_TIME,'%Y-%m-%d %H:%i') AS updateTime,
+        date_format(a.start_time,'%Y-%m-%d') as startTime,
+        date_format(a.end_time,'%Y-%m-%d') as endTime,
+        concat(date_format(a.start_time,'%Y-%m-%d'),'~',date_format(end_time,'%Y-%m-%d')) as businessTime,
         c.full_name as regionName
         FROM
         tb_activity_room_info a
@@ -147,7 +149,7 @@ SELECT
 	REGION AS region,
 	area,
 	COST AS cost,
-	UPDATE_TIME AS updateTime,
+	 date_format(UPDATE_TIME,'%Y-%m-%d %H:%i') AS updateTime,
 	c.full_name as regionName
 FROM
 	tb_activity_room_info a

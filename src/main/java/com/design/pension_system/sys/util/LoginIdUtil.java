@@ -11,9 +11,9 @@ public class LoginIdUtil {
     private UserMapper userMapper;
 
     public   String getLoginIdByToken(String token) {
-        String ticket = DigestUtils.md5DigestAsHex(token.getBytes());
+//        String ticket = DigestUtils.md5DigestAsHex(token.getBytes());
 
-        String loginIdByToken = userMapper.getLoginIdByToken(ticket);
+        String loginIdByToken = userMapper.getLoginIdByToken(token);
         return loginIdByToken;
     }
 }

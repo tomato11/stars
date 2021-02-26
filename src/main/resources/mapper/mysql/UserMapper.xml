@@ -133,7 +133,7 @@
         COST AS cost
         FROM
         tb_user_info a
-        RIGHT JOIN tb_order_info b ON b.MAIN_ID = a.WID
+        left JOIN tb_order_info b ON b.MAIN_ID = a.WID
         LEFT JOIN tb_dic_user_type c ON b.type = c.id
         LEFT JOIN tb_dic_business d ON FIND_IN_SET(d.id, a.BUSINESS) > 0
         LEFT JOIN tb_dic_age e ON TIMESTAMPDIFF(

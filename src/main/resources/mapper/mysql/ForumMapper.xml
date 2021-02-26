@@ -9,20 +9,20 @@
         </selectKey>
         insert into tb_Forum_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="wid != null and wid  != ''">
+            <if test="wid != null and wid != ''">
                 wid,
             </if>
-            <if test="mainId != null and mainId  != ''">
+            <if test="mainId != null and mainId != ''">
                 MAIN_ID,
             </if>
-            <if test="title != null and title  != ''">
+            <if test="title != null and title != ''">
                 TITLE,
             </if>
-            <if test="type != null and type  != ''">
+            <if test="type != null and type != ''">
                 TYPE,
             </if>
-            <if test="describe != null and describe  != ''">
-                DESCRIBE,
+            <if test="describe != null and describe != ''">
+                `DESCRIBE`,
             </if>
             CREATE_TIME,
             UPDATE_TIME
@@ -40,7 +40,7 @@
             <if test="type != null and type  != ''">
                 #{type},
             </if>
-            <if test="describe != null and describe  != ''">
+            <if test="describe != null and describe != ''">
                 #{describe},
             </if>
             now(),now(),
@@ -59,7 +59,7 @@
                 TYPE= #{type},
             </if>
             <if test="describe != null and describe  != ''">
-                DESCRIBE= #{describe},
+                `DESCRIBE`= #{describe},
             </if>
             update_time=now(),
         </set>
@@ -73,8 +73,8 @@
     <select id="ForumListByUser" resultType="java.util.HashMap">
         SELECT
         a.wid,
-        a.UPDATE_TIME AS updateTime,
-        a.CREATE_TIME AS createTime,
+        date_format(a.UPDATE_TIME,'%Y-%m-%d %H:%i') AS updateTime,
+        date_format(a.CREATE_TIME,'%Y-%m-%d %H:%i') AS createTime,
         b. NAME AS `name`,
         a.TITLE AS title,
         a.`DESCRIBE` AS `describe`
