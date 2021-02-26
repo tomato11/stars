@@ -168,20 +168,19 @@
         SELECT
         wid,
         login_id AS loginId,
-
-        a. NAME AS `name`,
+        a.NAME AS `name`,
         SEX AS sex,
-        b. NAME AS sexName,
-        a.BIRTH_DATE AS birthDate,
+        b.NAME AS sexName,
+        date_format(a.BIRTH_DATE,'%Y-%m-%d') AS birthDate,
         a.PHONE AS phone,
         EDUCATION AS education,
         COMPANY AS company,
-        WORKING_TIME AS workingTime,
+        date_format(WORKING_TIME,'%Y-%m-%d') AS workingTime,
         COST AS cost,
         TYPE AS type,
         c. NAME AS typeName,
         BUSINESS AS business,
-         GROUP_CONCAT(e.`NAME`) AS businessName
+         GROUP_CONCAT(e.`NAME`) AS businessName,
         NUMBER AS `number`,
         REGION AS region,
         d. NAME AS regionName,
@@ -200,7 +199,7 @@
         a.REGION
         ) = d.id
          LEFT JOIN tb_dic_business e ON FIND_IN_SET(e.id, a.BUSINESS) > 0
-        where a.loginId=#{loginId}
+        where a.LOGIN_ID=#{loginId}
         GROUP BY a.wid
     </select>
     <select id="getMenuByLoginId" resultType="java.util.HashMap">

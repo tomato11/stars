@@ -138,7 +138,7 @@
     and code=#{code}
     </select>
     <select id="checkPassWord" resultType="string">
-        select login_id as loginId from tb_user_info where login_id=#{loginId} and password=#{passWord}
+        select login_id as loginId from tb_user_info where login_id=#{loginId} and password=#{password}
     </select>
 
     <select id="queryPhoneExist" resultType="string">

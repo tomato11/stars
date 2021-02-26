@@ -4,19 +4,25 @@ import com.design.pension_system.sys.mapper.SignMapper;
 import com.design.pension_system.sys.mapper.UserMapper;
 import com.design.pension_system.sys.service.ObjectService;
 import com.design.pension_system.sys.service.SignService;
+import com.design.pension_system.sys.util.HmResponseUtil;
 import com.design.pension_system.sys.util.MsgUtils;
 import com.dtflys.forest.utils.StringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -45,7 +51,7 @@ public class SignServiceImpl implements SignService {
     public int userRegister(HashMap param) {
         String password = String.valueOf(param.get("password"));
         String newPassWord = DigestUtils.md5DigestAsHex(password.getBytes());
-        param.put("passWord", newPassWord);
+        param.put("password", newPassWord);
         int i = signMapper.userRegister(param);
 
         String wid = String.valueOf(param.get("wid"));
@@ -81,38 +87,53 @@ public class SignServiceImpl implements SignService {
     }
 
     @Override
-    public String findUserByUP(HashMap params) {
+    public ResponseEntity<Map> findUserByUP(HashMap params, HttpServletResponse response, HttpServletRequest request) {
         String loginId;
-        if (StringUtils.isNotEmpty(String.valueOf(params.get("code")))) {
+        if (null!=params.get("code")&&!"".equals(params.get("code"))) {
             String map = signMapper.queryPhoneExist(params.get("phone"));
             if (null == map) {
-                return map;
+                return HmResponseUtil.error(4002, "当前手机号未绑定账户");
             }
             //查询验证码
             loginId = signMapper.checkLoginCode(params);
-
+            if(null==loginId||"".equals(loginId)){
+                return HmResponseUtil.error(4002, "验证码错误");
+            }
         } else {
             String password = String.valueOf(params.get("password"));
             String newPassWord = DigestUtils.md5DigestAsHex(password.getBytes());
-            params.put("passWord", newPassWord);
+            params.put("password", newPassWord);
             //查询密码
             loginId = signMapper.checkPassWord(params);
+            if(null==loginId||"".equals(loginId)){
+                return HmResponseUtil.error(4002, "账号或密码错误");
+            }
         }
-        //判断userDB是否为null
-        if (loginId == null) {
-            //用户名和密码不正确
-            return null;
-        }
+
 
         String ticket = UUID.randomUUID().toString();
 
+//        String token = DigestUtils.md5DigestAsHex(ticket.getBytes());
 
-        String token = DigestUtils.md5DigestAsHex(ticket.getBytes());
+        signMapper.insertToken(ticket,loginId);
 
-        signMapper.insertToken(token,loginId);
+        //生成的是ticket信息
+        Cookie cookie = new Cookie("TICKET", ticket);
+        cookie.setMaxAge(7 * 24 * 3600); //7天有效
+        cookie.setPath("/");         //cookie数据读取的范围
+        response.addCookie(cookie);
 
-        //用户名和ticket绑定即可!!!!!!
-        return token;
+        String url = request.getHeader("Origin");
+        if (!StringUtils.isEmpty(url)) {
+            String val = response.getHeader("Access-Control-Allow-Origin");
+            if (StringUtils.isEmpty(val)) {
+                response.addHeader("Access-Control-Allow-Origin", url);
+                response.addHeader("Access-Control-Allow-Credentials", "true");
+            }
+        }
+
+        HashMap hashMap = userMapper.queryUserDetils(loginId);
+        return HmResponseUtil.success(hashMap);
     }
 
 }

@@ -3,6 +3,8 @@ package com.design.pension_system.sys.service;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -15,7 +17,7 @@ public interface SignService {
 
     int userRegister(HashMap param );
 
-    String findUserByUP(HashMap user);
+    ResponseEntity<Map> findUserByUP(HashMap user, HttpServletResponse response, HttpServletRequest request);
 
     Boolean checkLoginId(String loginId);
 

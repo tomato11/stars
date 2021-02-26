@@ -51,9 +51,9 @@ public class UserInterceptor implements HandlerInterceptor {
             return false; //表示拦截
         }
 
-        String ticket = DigestUtils.md5DigestAsHex(token.getBytes());
+//        String ticket = DigestUtils.md5DigestAsHex(token.getBytes());
 
-        String falg = signMapper.checkToken(ticket);
+        String falg = signMapper.checkToken(token);
         if (null == falg) {
             return false;
         }

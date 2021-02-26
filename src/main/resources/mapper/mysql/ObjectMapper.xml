@@ -48,6 +48,7 @@
             tb_dic_xj_xzqh a
             LEFT JOIN tb_dic_xj_xzqh b ON a.id = b.parent_id
             LEFT JOIN tb_dic_xj_xzqh c ON b.id = c.parent_id
+            WHERE a.id='650000'
         </select>
 
     <select id="selectAll" parameterType="map" resultMap="BaseResultMap">

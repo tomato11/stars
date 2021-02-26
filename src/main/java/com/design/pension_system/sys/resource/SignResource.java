@@ -85,35 +85,10 @@ public class SignResource {
     })
     @GetMapping("/loginCheck")
     public ResponseEntity<Map> doLogin(@RequestParam HashMap user, HttpServletResponse response, HttpServletRequest request) {
-        //获取userIP
 
-        String ticket = signService.findUserByUP(user);
+        ResponseEntity<Map> result = signService.findUserByUP(user,response,request);
 
-        //判断数据是否为null
-        if (org.springframework.util.StringUtils.isEmpty(ticket)) {
-            if (StringUtils.isNotEmpty(String.valueOf(user.get("code")))) {
-                return HmResponseUtil.error(400, "验证码错误");
-            } else {
-                return HmResponseUtil.error(401, "账号或密码不正确");
-            }
-        }
-
-        //生成的是ticket信息
-        Cookie cookie = new Cookie("TICKET", ticket);
-        cookie.setMaxAge(24 * 24 * 3600); //24天有效
-        cookie.setPath("/");         //cookie数据读取的范围
-        response.addCookie(cookie);
-
-        String url = request.getHeader("Origin");
-        if (!StringUtils.isEmpty(url)) {
-            String val = response.getHeader("Access-Control-Allow-Origin");
-            if (StringUtils.isEmpty(val)) {
-                response.addHeader("Access-Control-Allow-Origin", url);
-                response.addHeader("Access-Control-Allow-Credentials", "true");
-            }
-        }
-
-        return HmResponseUtil.success("校验通过");
+        return  result;
     }
 
 }
