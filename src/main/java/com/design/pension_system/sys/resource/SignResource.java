@@ -88,7 +88,7 @@ public class SignResource {
 
         ResponseEntity<Map> result = signService.findUserByUP(user,response,request);
 
-        return  result;
+        return result;
     }
 
 }

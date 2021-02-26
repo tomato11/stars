@@ -129,7 +129,11 @@ public class UserResource {
             @ApiImplicitParam(name = "loginId", value = "登陆用户", required = false, paramType = "query", dataType = "string"),
     })
     @GetMapping("/menu")
-    public ResponseEntity<Map> getMenuByLoginId(@RequestParam HashMap params) throws Exception {
+    public ResponseEntity<Map> getMenuByLoginId(HttpServletRequest request) throws Exception {
+        String token = request.getHeader("User_Token");
+        String loginId=loginIdUtil.getLoginIdByToken(token);
+        HashMap<Object, Object> params = new HashMap<>();
+        params.put("loginId",loginId);
         List<HashMap> result = userService.getMenuByLoginId(params);
         if (null != result) {
             return HmResponseUtil.success(result);

@@ -89,15 +89,20 @@ public class SignServiceImpl implements SignService {
     @Override
     public ResponseEntity<Map> findUserByUP(HashMap params, HttpServletResponse response, HttpServletRequest request) {
         String loginId;
-        if (null!=params.get("code")&&!"".equals(params.get("code"))) {
+        HashMap  tips = new HashMap<>();
+        if (null!=params.get("code")  ) {
             String map = signMapper.queryPhoneExist(params.get("phone"));
             if (null == map) {
-                return HmResponseUtil.error(4002, "当前手机号未绑定账户");
+                tips.put("tips","当前手机号未绑定账户");
+                String s = com.alibaba.fastjson.JSONObject.toJSONString(tips);
+                return HmResponseUtil.error(  "当前手机号未绑定账户");
             }
             //查询验证码
             loginId = signMapper.checkLoginCode(params);
             if(null==loginId||"".equals(loginId)){
-                return HmResponseUtil.error(4002, "验证码错误");
+                tips.put("tips","验证码错误");
+                String s = com.alibaba.fastjson.JSONObject.toJSONString(tips);
+                return HmResponseUtil.error(  "验证码错误");
             }
         } else {
             String password = String.valueOf(params.get("password"));
@@ -106,7 +111,9 @@ public class SignServiceImpl implements SignService {
             //查询密码
             loginId = signMapper.checkPassWord(params);
             if(null==loginId||"".equals(loginId)){
-                return HmResponseUtil.error(4002, "账号或密码错误");
+                tips.put("tips","密码错误");
+                String s = com.alibaba.fastjson.JSONObject.toJSONString(tips);
+                return HmResponseUtil.error(  "密码错误");
             }
         }
 
