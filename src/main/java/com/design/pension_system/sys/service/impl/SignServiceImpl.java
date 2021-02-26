@@ -105,6 +105,7 @@ public class SignServiceImpl implements SignService {
                 return HmResponseUtil.error(  "验证码错误");
             }
         } else {
+
             String password = String.valueOf(params.get("password"));
             String newPassWord = DigestUtils.md5DigestAsHex(password.getBytes());
             params.put("password", newPassWord);
