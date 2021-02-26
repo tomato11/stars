@@ -22,6 +22,7 @@ import java.io.UnsupportedEncodingException;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -35,9 +36,9 @@ public class SignServiceImpl implements SignService {
     private SignMapper signMapper;
     @Autowired
     private ObjectService objectService;
-    private String tableId1 = "01";//用户照片附件表
-    private String tableId2 = "02";//资格证书照片附件表
-
+    private String userPhoneId = "01";//用户照片附件表
+    private String userQualificationId = "02";//资格证书照片附件表
+ 
 
     @Override
     public Object sendLoginCode(String phone) throws UnsupportedEncodingException {
@@ -56,10 +57,10 @@ public class SignServiceImpl implements SignService {
 
         String wid = String.valueOf(param.get("wid"));
         java.util.List<HashMap> userPhoto = (java.util.List<HashMap>) param.get("userPhone");
-        objectService.savePhoto(userPhoto, (String) param.get("wid"), tableId1);
+        objectService.savePhoto(userPhoto, (String) param.get("wid"), userPhoneId);
         if (!((String) param.get("type")).equals("1")) {//专业人员
             java.util.List<HashMap> qualificationPhone = (java.util.List<HashMap>) param.get("qualificationPhone");
-            objectService.savePhoto(qualificationPhone, (String) param.get("wid"), tableId2);
+            objectService.savePhoto(qualificationPhone, (String) param.get("wid"), userQualificationId);
         }
 
 
@@ -141,6 +142,16 @@ public class SignServiceImpl implements SignService {
         }
 
         HashMap hashMap = userMapper.queryUserDetils(loginId);
+        HashMap typeAndWid = userMapper.queryTypeAndWidByLoginId(loginId);
+        if ("1".equals(typeAndWid.get("type"))) {//用户
+            List<HashMap> photoList = objectService.queryPhotoByMainId((String) typeAndWid.get("wid"), userPhoneId);
+            hashMap.put("userPhoto", photoList);
+        } else {//专业人员
+            List<HashMap> photoList = objectService.queryPhotoByMainId((String) typeAndWid.get("wid"), userPhoneId);
+            List<HashMap> userQualificationList = objectService.queryPhotoByMainId((String) typeAndWid.get("wid"), userQualificationId);
+            hashMap.put("userPhoto", photoList);
+            hashMap.put("qualificationPhone", userQualificationList);
+        }
         return HmResponseUtil.success(hashMap);
     }
 
