@@ -79,6 +79,7 @@
 
         </trim>
     </insert>
+
     <update id="updateActivity">
         update tb_activity_info
         <set>

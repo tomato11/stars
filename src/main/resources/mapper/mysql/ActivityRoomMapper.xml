@@ -72,6 +72,7 @@
         </trim>
     </insert>
 
+
     <update id="updateActivityRoom">
         update tb_activity_room_info
         <set>
