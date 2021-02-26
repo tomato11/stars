@@ -99,7 +99,7 @@
             </if>
 
             <if test="startTime != null and startTime!=''">
-                star_time= #{startTime},
+                start_time= #{startTime},
             </if>
             <if test="endTime != null and endTime!=''">
                 end_time = #{endTime},

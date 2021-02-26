@@ -1,5 +1,4 @@
-ALTER TABLE `tb_order_info`
-MODIFY COLUMN `DESCRIBE`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '需求描述' AFTER `EVALUATE`
 
 
+tb_order_info的DESCRIBE 字段类型设置为varchar 长度设置为255
 tb_activity_room_info 的START_TIME和END_TIME长度设为255
