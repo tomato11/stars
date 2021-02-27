@@ -36,7 +36,7 @@ public class SignServiceImpl implements SignService {
     private SignMapper signMapper;
     @Autowired
     private ObjectService objectService;
-    private String userPhoneId = "01";//用户照片附件表
+    private String userPhotoId = "01";//用户照片附件表
     private String userQualificationId = "02";//资格证书照片附件表
 
 
@@ -56,11 +56,11 @@ public class SignServiceImpl implements SignService {
         int i = signMapper.userRegister(param);
 
         String wid = String.valueOf(param.get("wid"));
-        java.util.List<HashMap> userPhoto = (java.util.List<HashMap>) param.get("userPhone");
-        objectService.savePhoto(userPhoto, (String) param.get("wid"), userPhoneId);
+        java.util.List<HashMap> userPhoto = (java.util.List<HashMap>) param.get("userPhoto");
+        objectService.savePhoto(userPhoto, (String) param.get("wid"), userPhotoId);
         if (!((String) param.get("type")).equals("1")) {//专业人员
-            java.util.List<HashMap> qualificationPhone = (java.util.List<HashMap>) param.get("qualificationPhone");
-            objectService.savePhoto(qualificationPhone, (String) param.get("wid"), userQualificationId);
+            java.util.List<HashMap> qualificationPhoto = (java.util.List<HashMap>) param.get("qualificationPhoto");
+            objectService.savePhoto(qualificationPhoto, (String) param.get("wid"), userQualificationId);
         }
 
 
@@ -137,13 +137,13 @@ public class SignServiceImpl implements SignService {
         HashMap typeAndWid = userMapper.queryTypeAndWidByLoginId(loginId);
         HashMap hashMap = userMapper.queryUserDetils(String.valueOf(typeAndWid.get("wid")));
         if ("1".equals(typeAndWid.get("type"))) {//用户
-            List<HashMap> photoList = objectService.queryPhotoByMainId((String) typeAndWid.get("wid"), userPhoneId);
+            List<HashMap> photoList = objectService.queryPhotoByMainId((String) typeAndWid.get("wid"), userPhotoId);
             hashMap.put("userPhoto", photoList);
         } else {//专业人员
-            List<HashMap> photoList = objectService.queryPhotoByMainId((String) typeAndWid.get("wid"), userPhoneId);
+            List<HashMap> photoList = objectService.queryPhotoByMainId((String) typeAndWid.get("wid"), userPhotoId);
             List<HashMap> userQualificationList = objectService.queryPhotoByMainId((String) typeAndWid.get("wid"), userQualificationId);
             hashMap.put("userPhoto", photoList);
-            hashMap.put("qualificationPhone", userQualificationList);
+            hashMap.put("qualificationPhoto", userQualificationList);
         }
         return HmResponseUtil.success(hashMap);
     }

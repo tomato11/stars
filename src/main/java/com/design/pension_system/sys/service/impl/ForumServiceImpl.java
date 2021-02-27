@@ -22,7 +22,7 @@ public class ForumServiceImpl implements ForumService {
     private ObjectService objectService;
 
     private String forumId = "06";
-    private String userPhoneId = "01";//用户照片
+    private String userPhotoId = "01";//用户照片
     @Override
     public int insertForum(HashMap param) {
         int i = forumMapper.insertForum(param);
@@ -62,7 +62,7 @@ public class ForumServiceImpl implements ForumService {
         if(null!=hashMaps&&hashMaps.size()>0){
             for (int i = 0; i < hashMaps.size(); i++) {
                 HashMap hashMap = hashMaps.get(i);
-                List<HashMap> photoList = objectService.queryPhotoByMainId((String) hashMap.get("userId"), userPhoneId);
+                List<HashMap> photoList = objectService.queryPhotoByMainId((String) hashMap.get("userId"), userPhotoId);
                 hashMap.put("userPhoto",photoList);
             }
         }

@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     @Autowired
     ObjectService objectService;
-    private String userPhoneId = "01";//用户照片
+    private String userPhotoId = "01";//用户照片
     private String userQualificationId = "02";//证件照
 
     @Override
@@ -49,11 +49,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateUser(HashMap param) {
         int i = userMapper.updateUser(param);
-        objectService.savePhoto((List<HashMap>) param.get("userPhoto"), (String) param.get("wid"), userPhoneId);
+        objectService.savePhoto((List<HashMap>) param.get("userPhoto"), (String) param.get("wid"), userPhotoId);
         objectService.savePhoto((List<HashMap>) param.get("qualificationPhoto"), (String) param.get("wid"), userQualificationId);
         return i;
     }
-    
+
 
     @Override
     public HashMap userDetils(String wid) {
@@ -63,13 +63,13 @@ public class UserServiceImpl implements UserService {
         HashMap typeAndWid = userMapper.queryTypeAndWidByLoginId(loginId);
 
         if ("1".equals(typeAndWid.get("type"))) {//用户
-            List<HashMap> photoList = objectService.queryPhotoByMainId((String) typeAndWid.get("wid"), userPhoneId);
+            List<HashMap> photoList = objectService.queryPhotoByMainId((String) typeAndWid.get("wid"), userPhotoId);
             result.put("userPhoto", photoList);
         } else {//专业人员
-            List<HashMap> photoList = objectService.queryPhotoByMainId((String) typeAndWid.get("wid"), userPhoneId);
+            List<HashMap> photoList = objectService.queryPhotoByMainId((String) typeAndWid.get("wid"), userPhotoId);
             List<HashMap> userQualificationList = objectService.queryPhotoByMainId((String) typeAndWid.get("wid"), userQualificationId);
             result.put("userPhoto", photoList);
-            result.put("qualificationPhone", userQualificationList);
+            result.put("qualificationPhoto", userQualificationList);
         }
         return result;
     }
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
         if (null != hashMaps && hashMaps.size() > 0) {
             for (int i = 0; i < hashMaps.size(); i++) {
                 HashMap hashMap = hashMaps.get(i);
-                List<HashMap> photoList = objectService.queryPhotoByMainId((String) hashMap.get("wid"), userPhoneId);
+                List<HashMap> photoList = objectService.queryPhotoByMainId((String) hashMap.get("wid"), userPhotoId);
                 hashMap.put("userPhoto", photoList);
             }
         }
@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserService {
         if(null!=hashMaps&&hashMaps.size()>0){
             for (int i = 0; i < hashMaps.size(); i++) {
                 HashMap hashMap = hashMaps.get(i);
-                List<HashMap> photoList = objectService.queryPhotoByMainId((String) hashMap.get("wid"), userPhoneId);
+                List<HashMap> photoList = objectService.queryPhotoByMainId((String) hashMap.get("wid"), userPhotoId);
                 hashMap.put("userPhoto",photoList);
             }
         }
