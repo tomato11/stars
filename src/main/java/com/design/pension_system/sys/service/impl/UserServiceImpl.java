@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     public int updateUser(HashMap param) {
         int i = userMapper.updateUser(param);
         objectService.savePhoto((List<HashMap>) param.get("userPhoto"), (String) param.get("wid"), userPhoneId);
-        objectService.savePhoto((List<HashMap>) param.get("qualificationPhone"), (String) param.get("wid"), userQualificationId);
+        objectService.savePhoto((List<HashMap>) param.get("qualificationPhoto"), (String) param.get("wid"), userQualificationId);
         return i;
     }
 
