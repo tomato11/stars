@@ -53,8 +53,7 @@ public class UserServiceImpl implements UserService {
         objectService.savePhoto((List<HashMap>) param.get("qualificationPhoto"), (String) param.get("wid"), userQualificationId);
         return i;
     }
-
-
+    
 
     @Override
     public HashMap userDetils(String wid) {
