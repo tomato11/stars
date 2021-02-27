@@ -200,7 +200,7 @@
         a.REGION
         ) = d.id
          LEFT JOIN tb_dic_business e ON FIND_IN_SET(e.id, a.BUSINESS) > 0
-        where a.LOGIN_ID=#{loginId}
+        where a.wid=#{wid}
         GROUP BY a.wid
     </select>
     <select id="getMenuByLoginId" resultType="java.util.HashMap">

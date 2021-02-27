@@ -55,10 +55,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public HashMap userDetils(String loginId) {
+    public HashMap userDetils(String wid) {
         HashMap result = new HashMap();
-        result = userMapper.queryUserDetils(loginId);
-
+        result = userMapper.queryUserDetils(wid);
+        String loginId = String.valueOf(result.get("loginId"));
         HashMap typeAndWid = userMapper.queryTypeAndWidByLoginId(loginId);
 
         if ("1".equals(typeAndWid.get("type"))) {//用户

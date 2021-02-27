@@ -1,5 +1,6 @@
 package com.design.pension_system.sys.resource;
 
+import com.design.pension_system.sys.service.ElderlyService;
 import com.design.pension_system.sys.service.SignService;
 import com.design.pension_system.sys.service.UserService;
 import com.design.pension_system.sys.util.CookieUtil;
@@ -57,21 +58,28 @@ public class UserResource {
             return HmResponseUtil.error("有错误");
         }
     }
+
     @Autowired
     LoginIdUtil loginIdUtil;
+    @Autowired
+    ElderlyService elderlyService;
 
     @ApiOperation(value = "用户详情")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "loginId", value = "登陆用户", required = true, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "wid", value = "wid", required = true, paramType = "query", dataType = "string"),
     })
     @GetMapping("/user/detils")
-    public ResponseEntity<Map> userDetils( HttpServletRequest request) throws Exception {
-//        Cookie loginIdCookie = CookieUtil.get(request, "LOGINID");
-//        String loginId = loginIdCookie.getValue();
+    public ResponseEntity<Map> userDetils(@RequestParam HashMap params, HttpServletRequest request) throws Exception {
+
+        String wid;
 
         String token = request.getHeader("User_Token");
-        String loginId=loginIdUtil.getLoginIdByToken(token);
-        HashMap result = userService.userDetils(loginId);
+        if (null == params.get("wid")) {
+            wid = elderlyService.queryWidByToken(token);
+        } else {
+            wid = String.valueOf(params.get("wid"));
+        }
+        HashMap result = userService.userDetils(wid);
         if (null != result) {
             return HmResponseUtil.success(result);
         } else {
@@ -131,9 +139,9 @@ public class UserResource {
     @GetMapping("/menu")
     public ResponseEntity<Map> getMenuByLoginId(HttpServletRequest request) throws Exception {
         String token = request.getHeader("User_Token");
-        String loginId=loginIdUtil.getLoginIdByToken(token);
+        String loginId = loginIdUtil.getLoginIdByToken(token);
         HashMap<Object, Object> params = new HashMap<>();
-        params.put("loginId",loginId);
+        params.put("loginId", loginId);
         List<HashMap> result = userService.getMenuByLoginId(params);
         if (null != result) {
             return HmResponseUtil.success(result);

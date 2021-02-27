@@ -20,7 +20,7 @@ public interface UserMapper {
 
     int updateUser(HashMap param);
 
-    HashMap queryUserDetils(String loginId);
+    HashMap queryUserDetils(@Param("wid") String wid);
 
     void insertUserRoleMiddle(@Param("role") String role, @Param("loginId") String loginId);
 

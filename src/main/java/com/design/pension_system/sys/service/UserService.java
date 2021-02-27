@@ -18,7 +18,7 @@ public interface UserService {
 
     List<HashMap> getBusinessByType(HashMap params);
 
-    HashMap userDetils(String loginId);
+    HashMap userDetils(String wid);
 
     int updateUser(HashMap param);
 

@@ -38,7 +38,7 @@ public class SignServiceImpl implements SignService {
     private ObjectService objectService;
     private String userPhoneId = "01";//用户照片附件表
     private String userQualificationId = "02";//资格证书照片附件表
- 
+
 
     @Override
     public Object sendLoginCode(String phone) throws UnsupportedEncodingException {
@@ -79,31 +79,27 @@ public class SignServiceImpl implements SignService {
 
     @Override
     public Boolean checkLoginId(String loginId) {
-        return null==signMapper.checkLoginId(loginId)?true:false;//没有返回true
+        return null == signMapper.checkLoginId(loginId) ? true : false;//没有返回true
     }
 
     @Override
     public Boolean checkPhone(String phone) {
-        return null==signMapper.checkPhone(phone)?true:false;//没有返回true
+        return null == signMapper.checkPhone(phone) ? true : false;//没有返回true
     }
 
     @Override
     public ResponseEntity<Map> findUserByUP(HashMap params, HttpServletResponse response, HttpServletRequest request) {
         String loginId;
-        HashMap  tips = new HashMap<>();
-        if (null!=params.get("code")  ) {
+
+        if (null != params.get("code")) {
             String map = signMapper.queryPhoneExist(params.get("phone"));
             if (null == map) {
-                tips.put("tips","当前手机号未绑定账户");
-                String s = com.alibaba.fastjson.JSONObject.toJSONString(tips);
-                return HmResponseUtil.error(  "当前手机号未绑定账户");
+                return HmResponseUtil.error("当前手机号未绑定账户");
             }
             //查询验证码
             loginId = signMapper.checkLoginCode(params);
-            if(null==loginId||"".equals(loginId)){
-                tips.put("tips","验证码错误");
-                String s = com.alibaba.fastjson.JSONObject.toJSONString(tips);
-                return HmResponseUtil.error(  "验证码错误");
+            if (null == loginId || "".equals(loginId)) {
+                return HmResponseUtil.error("验证码错误");
             }
         } else {
 
@@ -112,10 +108,8 @@ public class SignServiceImpl implements SignService {
             params.put("password", newPassWord);
             //查询密码
             loginId = signMapper.checkPassWord(params);
-            if(null==loginId||"".equals(loginId)){
-                tips.put("tips","密码错误");
-                String s = com.alibaba.fastjson.JSONObject.toJSONString(tips);
-                return HmResponseUtil.error(  "密码错误");
+            if (null == loginId || "".equals(loginId)) {
+                return HmResponseUtil.error("密码错误");
             }
         }
 
@@ -124,7 +118,7 @@ public class SignServiceImpl implements SignService {
 
 //        String token = DigestUtils.md5DigestAsHex(ticket.getBytes());
 
-        signMapper.insertToken(ticket,loginId);
+        signMapper.insertToken(ticket, loginId);
 
         //生成的是ticket信息
         Cookie cookie = new Cookie("TICKET", ticket);
@@ -140,9 +134,8 @@ public class SignServiceImpl implements SignService {
                 response.addHeader("Access-Control-Allow-Credentials", "true");
             }
         }
-
-        HashMap hashMap = userMapper.queryUserDetils(loginId);
         HashMap typeAndWid = userMapper.queryTypeAndWidByLoginId(loginId);
+        HashMap hashMap = userMapper.queryUserDetils(String.valueOf(typeAndWid.get("wid")));
         if ("1".equals(typeAndWid.get("type"))) {//用户
             List<HashMap> photoList = objectService.queryPhotoByMainId((String) typeAndWid.get("wid"), userPhoneId);
             hashMap.put("userPhoto", photoList);
