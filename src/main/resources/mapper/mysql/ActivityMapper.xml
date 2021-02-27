@@ -154,6 +154,7 @@
         </if>
     </select>
     <select id="ActivityDetails" resultType="java.util.HashMap">
+
         SELECT
         wid,
         a. NAME AS `name`,
