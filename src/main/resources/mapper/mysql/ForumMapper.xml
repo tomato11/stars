@@ -83,10 +83,10 @@
         tb_forum_info a
         LEFT JOIN tb_user_info b ON a.MAIN_ID = b.WID
         where 1=1
-        <if test="wid!=null and wid!=null">
+        <if test="wid!=null and wid!=''">
             and a.wid=#{wid}
         </if>
-        <if test="type!=null and type!=null">
+        <if test="type!=null and type!=''">
             and a.type=#{type}
         </if>
         order by a.update_time

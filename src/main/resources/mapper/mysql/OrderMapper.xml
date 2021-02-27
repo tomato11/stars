@@ -168,12 +168,12 @@
 
         WHERE
         1 = 1
-        <if test="status!=null and status!='' and status!='5'">
-            and a.status=#{status}
+
+        <if test="status!=null and status!='' ">
+            and case when  #{status}='5' or #{status}='2,4' then a.status !='1' else
+              a.status=#{status} end
         </if>
-        <if test="status=='5'">
-            and a.status !='1'
-        </if>
+
         <if test="score!=null and score!='' ">
             and d.id=#{score}
         </if>
