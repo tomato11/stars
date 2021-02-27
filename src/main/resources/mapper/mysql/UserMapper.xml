@@ -95,7 +95,7 @@
             and a.type=#{type}
         </if>
         <if test="name!=null and name!=''">
-            and a.name=#{name}
+            and INSTR(a.name,#{name})
         </if>
     </select>
     <select id="evaluateList" resultType="java.util.HashMap">
