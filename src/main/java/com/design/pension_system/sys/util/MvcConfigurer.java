@@ -13,6 +13,7 @@ public class MvcConfigurer implements WebMvcConfigurer {
     private UserInterceptor userInterceptor;
 
 
+
     //添加拦截器
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -22,8 +23,16 @@ public class MvcConfigurer implements WebMvcConfigurer {
                 "/api/sendLoginCode/**","/api/register/**","/api/loginCheck/**"
                 ,"/api/selectCommonDic/**" ,"/api/selectCommonDic/multi/**",
                 "/api/user/getBusinessByType/**",
-                "/api/xzqh/tree/**", "/api/checkPhone/**","/api/checkLoginId/**", "/upload/**");
+                "/api/xzqh/tree/**", "/api/checkPhone/**","/api/checkLoginId/**", "/upload/**","/api/upload/**");
     }
+//    ,"/*.html"
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        //需要配置1：----------- 需要告知系统，这是要被当成静态文件的！
+//        //第一个方法设置访问路径前缀，第二个方法设置资源路径
+//        registry.addResourceHandler("/*.html").addResourceLocations("classpath:/static/");
+//    }
+
 
 
 }
