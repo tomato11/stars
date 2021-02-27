@@ -152,14 +152,16 @@
         tb_Order_info a
         LEFT JOIN tb_user_info b ON a.MAIN_ID = b.wid
         LEFT JOIN tb_dic_order_status c ON a.`STATUS` = c.ID
-        LEFT JOIN tb_dic_score d ON a.SCORE >= d.`START` <![CDATA[<=]]> d.`END`
+        LEFT JOIN tb_dic_score d ON a.SCORE >= d.`START` and a.SCORE <![CDATA[<=]]> d.`END`
         LEFT JOIN tb_elderly_info e ON a.ELDERLY_ID = e.WID
         LEFT JOIN tb_dic_xj_xzqh f ON
         IF (
-        LOCATE(',', e.REGION) != 0,
-        RIGHT (
-        e.REGION,
-        LENGTH(e.REGION) - LOCATE(',', e.REGION)
+        INSTR(REVERSE(e.region), ',') != 0,
+        REVERSE(
+        LEFT (
+        REVERSE(e.region),
+        INSTR(REVERSE(e.region), ',') - 1
+        )
         ),
         e.REGION
         ) = f.id

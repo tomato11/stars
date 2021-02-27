@@ -126,10 +126,12 @@
         tb_activity_room_info a
         LEFT JOIN tb_dic_activity_room_type b ON a.type = b.ID
         left join tb_dic_xj_xzqh c on IF (
-        LOCATE(',', a.REGION) != 0,
-        RIGHT (
-        a.REGION,
-        LENGTH(a.REGION) - LOCATE(',', a.REGION)
+        INSTR(REVERSE(region), ',') != 0,
+        REVERSE(
+        LEFT (
+        REVERSE(region),
+        INSTR(REVERSE(region), ',') - 1
+        )
         ),
         a.REGION
         )=c.id
@@ -156,13 +158,15 @@ FROM
 	tb_activity_room_info a
 LEFT JOIN tb_dic_activity_room_type b ON a.type = b.ID
 left join tb_dic_xj_xzqh c on IF (
-        LOCATE(',', a.REGION) != 0,
-        RIGHT (
-        a.REGION,
-        LENGTH(a.REGION) - LOCATE(',', a.REGION)
-        ),
-        a.REGION
-        )=c.id
+	INSTR(REVERSE(region), ',') != 0,
+	REVERSE(
+		LEFT (
+			REVERSE(region),
+			INSTR(REVERSE(region), ',') - 1
+		)
+	),
+	a.REGION
+)=c.id
 where
  wid=#{wid}
     </select>

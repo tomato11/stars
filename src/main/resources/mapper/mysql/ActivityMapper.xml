@@ -134,11 +134,13 @@
         FROM
         tb_activity_info a
         LEFT JOIN tb_dic_activity_type b ON a.TYPE = b.id
-        left join tb_dic_xj_xzqh c on IF (
-        LOCATE(',', a.REGION) != 0,
-        RIGHT (
-        a.REGION,
-        LENGTH(REGION) - LOCATE(',', a.REGION)
+        left join tb_dic_xj_xzqh c on   IF (
+        INSTR(REVERSE(region), ',') != 0,
+        REVERSE(
+        LEFT (
+        REVERSE(region),
+        INSTR(REVERSE(region), ',') - 1
+        )
         ),
         a.REGION
         )=c.id
@@ -170,11 +172,13 @@
         FROM
         tb_activity_info a
         LEFT JOIN tb_dic_activity_type b ON a.TYPE = b.id
-        LEFT JOIN tb_dic_xj_xzqh c on IF (
-        LOCATE(',', a.REGION) != 0,
-        RIGHT (
-        a.REGION,
-        LENGTH(REGION) - LOCATE(',', a.REGION)
+        LEFT JOIN tb_dic_xj_xzqh c on  IF (
+        INSTR(REVERSE(region), ',') != 0,
+        REVERSE(
+        LEFT (
+        REVERSE(region),
+        INSTR(REVERSE(region), ',') - 1
+        )
         ),
         a.REGION
         )=c.id
@@ -193,11 +197,13 @@
         a.region,b.full_name as regionName
         FROM
         tb_activity_info a
-        LEFT JOIN tb_dic_xj_xzqh b ON IF (
-        LOCATE(',', a.REGION) != 0,
-        RIGHT (
-        a.REGION,
-        LENGTH(REGION) - LOCATE(',', a.REGION)
+        LEFT JOIN tb_dic_xj_xzqh b ON  IF (
+        INSTR(REVERSE(region), ',') != 0,
+        REVERSE(
+        LEFT (
+        REVERSE(region),
+        INSTR(REVERSE(region), ',') - 1
+        )
         ),
         a.REGION
         )=b.id

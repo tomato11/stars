@@ -137,11 +137,13 @@
         tb_elderly_info a
         LEFT JOIN tb_dic_user_sex b ON a.sex = b.id
          LEFT JOIN tb_dic_xj_xzqh c ON
-        IF (
-        LOCATE(',', a.REGION) != 0,
-        RIGHT (
-        a.REGION,
-        LENGTH(a.REGION) - LOCATE(',', a.REGION)
+       IF (
+        INSTR(REVERSE(region), ',') != 0,
+        REVERSE(
+        LEFT (
+        REVERSE(region),
+        INSTR(REVERSE(region), ',') - 1
+        )
         ),
         a.REGION
         )=c.id
@@ -165,10 +167,12 @@
         tb_elderly_info a
         LEFT JOIN tb_dic_xj_xzqh b ON
         IF (
-        LOCATE(',', a.REGION) != 0,
-        RIGHT (
-        a.REGION,
-        LENGTH(a.REGION) - LOCATE(',', a.REGION)
+        INSTR(REVERSE(region), ',') != 0,
+        REVERSE(
+        LEFT (
+        REVERSE(region),
+        INSTR(REVERSE(region), ',') - 1
+        )
         ),
         a.REGION
         )=b.id
