@@ -1,5 +1,6 @@
 package com.design.pension_system.sys.resource;
 
+import com.design.pension_system.sys.service.ElderlyService;
 import com.design.pension_system.sys.service.ForumService;
 import com.design.pension_system.sys.util.HmResponseUtil;
 import com.github.pagehelper.PageInfo;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,9 +20,22 @@ import java.util.Map;
 public class ForumResource {
     @Autowired
     private ForumService ForumService;
+
+    @Autowired
+    private ElderlyService elderlyService;
     @ApiOperation(value = "新增讨论")
     @PostMapping("/Forum")
-    public ResponseEntity<Map> insertForum(@RequestBody  HashMap param) throws Exception {
+    public ResponseEntity<Map> insertForum(@RequestBody  HashMap param, HttpServletRequest request) throws Exception {
+        String wid;
+
+        String token = request.getHeader("User_Token");
+        if (null == param.get("wid")) {
+            wid = elderlyService.queryWidByToken(token);
+        } else {
+            wid = String.valueOf(param.get("wid"));
+        }
+
+        param.put("mainId",wid);
         int result = ForumService.insertForum(param);
         if (result > 0) {
             return HmResponseUtil.success(result);

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -99,4 +100,14 @@ public class OrderResource {
     }
 
 
+    @ApiOperation(value = "订单进度字典表")
+    @GetMapping("/order/progress")
+    public ResponseEntity<Map> orderProgress() throws Exception {
+        List<HashMap> result = orderService.orderProgress( );
+        if (null != result) {
+            return HmResponseUtil.success(result);
+        } else {
+            return HmResponseUtil.error("有错误");
+        }
+    }
 }

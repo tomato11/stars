@@ -168,8 +168,11 @@
 
         WHERE
         1 = 1
-        <if test="status!=null and status!='' ">
+        <if test="status!=null and status!='' and status!='5'">
             and a.status=#{status}
+        </if>
+        <if test="status=='5'">
+            and a.status !='1'
         </if>
         <if test="score!=null and score!='' ">
             and d.id=#{score}
@@ -177,5 +180,8 @@
         <if test="type!=null and type!='' ">
             and a.type=#{type}
         </if>
+    </select>
+    <select id="orderProgress" resultType="java.util.HashMap">
+        select * from tb_dic_order_status where id in ('2','4')
     </select>
 </mapper>

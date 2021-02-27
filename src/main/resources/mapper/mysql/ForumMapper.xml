@@ -73,6 +73,7 @@
     <select id="ForumListByUser" resultType="java.util.HashMap">
         SELECT
         a.wid,
+        b.wid as userId,
         date_format(a.UPDATE_TIME,'%Y-%m-%d %H:%i') AS updateTime,
         date_format(a.CREATE_TIME,'%Y-%m-%d %H:%i') AS createTime,
         b. NAME AS `name`,

@@ -59,4 +59,9 @@ public class OrderServiceImpl implements OrderService {
         List<HashMap> hashMaps = orderMapper.OrderListByUser(params);
         return new PageInfo<HashMap>(hashMaps);
     }
+
+    @Override
+    public List<HashMap> orderProgress() {
+        return orderMapper.orderProgress();
+    }
 }

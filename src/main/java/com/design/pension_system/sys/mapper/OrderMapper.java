@@ -18,4 +18,5 @@ public interface OrderMapper {
     List<HashMap> OrderListByUser(HashMap params);
 
 
+    List<HashMap> orderProgress();
 }
