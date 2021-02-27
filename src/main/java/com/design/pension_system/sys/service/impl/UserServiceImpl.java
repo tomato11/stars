@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
+
     @Override
     public HashMap userDetils(String wid) {
         HashMap result = new HashMap();
