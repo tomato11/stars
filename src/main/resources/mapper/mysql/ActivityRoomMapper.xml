@@ -152,8 +152,12 @@ SELECT
 	REGION AS region,
 	area,
 	COST AS cost,
-	 date_format(UPDATE_TIME,'%Y-%m-%d %H:%i') AS updateTime,
-	c.full_name as regionName
+	 date_format(UPDATE_TIME,'% Y-%m-%d %H:%i') AS updateTime,
+	c.full_name as regionName,
+	concat( START_TIME ,'-', end_time ) as serviceTime,
+	address,
+	START_TIME as startTime,
+	end_time as endTime
 FROM
 	tb_activity_room_info a
 LEFT JOIN tb_dic_activity_room_type b ON a.type = b.ID
