@@ -184,7 +184,8 @@
         NUMBER AS `number`,
         REGION AS region,
         d. NAME AS regionName,
-        ADDRESS AS address
+        ADDRESS AS address,
+        case when a.type='1' then 1 when a.type in('2','3','4') then 2 else   3  end as roleId
         FROM
         tb_user_info a
         LEFT JOIN tb_dic_user_sex b ON a.sex = b.id
