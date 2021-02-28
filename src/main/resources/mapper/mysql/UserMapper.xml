@@ -222,5 +222,8 @@ where 1=1
     <select id="getLoginIdByToken" resultType="java.lang.String">
         select  login_id from tb_token where token=#{token}
     </select>
+    <select id="getEvaluateDic" resultType="java.util.HashMap">
+        select ID as id,name as name from tb_dic_user_type where id!='1'
+    </select>
 
 </mapper>
