@@ -5,7 +5,7 @@
         <selectKey keyProperty="wid" resultType="String" order="BEFORE">
             <![CDATA[  SELECT UUID()  FROM  dual  ]]>
         </selectKey>
-        insert into tb_order_info
+        replace into tb_order_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="wid != null and wid  != ''">
                 wid,
