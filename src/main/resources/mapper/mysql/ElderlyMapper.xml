@@ -181,8 +181,8 @@
         <if test="name!=null and name!=''">
         and INSTR(a.name,#{name})
         </if>
-        <if test="loginId!=null and loginId!=''">
-            and a.main_id=#{loginId}
+        <if test="mainId!=null and mainId!=''">
+            and a.main_id=#{mainId}
         </if>
     </select>
     <select id="queryWidByToken" resultType="java.lang.String">

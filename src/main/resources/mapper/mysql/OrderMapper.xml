@@ -16,6 +16,9 @@
             <if test="elderlyId != null and elderlyId != ''">
                 ELDERLY_ID,
             </if>
+            <if test="userWid != null and userWid != ''">
+                USER_WID,
+            </if>
             <if test="type != null and type != ''">
                 TYPE,
             </if>
@@ -49,6 +52,9 @@
             </if>
             <if test="elderlyId != null and elderlyId != ''">
                 #{elderlyId},
+            </if>
+            <if test="userWid != null and userWid != ''">
+                #{userWid},
             </if>
             <if test="type != null and type != ''">
                 #{type},
@@ -104,8 +110,8 @@
             <if test="describe != null and describe != ''">
                 `describe`= #{describe},
             </if>
-             <if test="evaluate != null and evaluate != ''">
-                 EVALUATE= #{evaluate},
+            <if test="evaluate != null and evaluate != ''">
+                EVALUATE= #{evaluate},
             </if>
             update_time=now(),
         </set>
@@ -165,17 +171,133 @@
         ),
         e.REGION
         ) = f.id
-
         WHERE
         1 = 1
-
+        and b.wid is not null
         <if test="status!=null and status!='' ">
-            and case when  #{status}='5' or #{status}='2,4' then a.status !='1' else
-              a.status=#{status} end
+            and case when #{status}='5' or #{status}='2,4' then a.status !='1' else
+            a.status=#{status} end
         </if>
 
         <if test="score!=null and score!='' ">
             and d.id=#{score}
+        </if>
+        <if test="userWid!=null and userWid!='' ">
+            and a.user_wid=#{userWid}
+        </if>
+        <if test="type!=null and type!='' ">
+            and a.type=#{type}
+        </if>
+        union all
+        SELECT
+        a.wid,
+        b. NAME AS `name`,
+        TIMESTAMPDIFF(
+        YEAR,
+        CONCAT(e.BIRTH_DATE),
+        NOW()
+        ) AS age,
+        a. STATUS AS `status`,
+        c. NAME AS statusName,
+        date_format(a.START_TIME,'%Y-%m-%d %H:%i') AS startTime,
+        date_format(a.END_TIME,'%Y-%m-%d %H:%i') AS endTime,
+        CONCAT(
+        DATE_FORMAT(
+        a.START_TIME,
+        '%Y-%m-%d %H:%i'
+        ),
+        '至',
+        DATE_FORMAT(a.END_TIME, '%Y-%m-%d %H:%i')
+        ) AS serviceTime,
+        date_format(a.CREATE_TIME,'%Y-%m-%d %H:%i') AS createTime,
+        f.full_name AS regionName
+        FROM
+        tb_Order_info a
+        LEFT JOIN tb_activity_info b ON a.MAIN_ID = b.wid
+        LEFT JOIN tb_dic_order_status c ON a.`STATUS` = c.ID
+        LEFT JOIN tb_dic_score d ON a.SCORE >= d.`START` and a.SCORE <![CDATA[<=]]> d.`END`
+        LEFT JOIN tb_elderly_info e ON a.ELDERLY_ID = e.WID
+        LEFT JOIN tb_dic_xj_xzqh f ON
+        IF (
+        INSTR(REVERSE(e.region), ',') != 0,
+        REVERSE(
+        LEFT (
+        REVERSE(e.region),
+        INSTR(REVERSE(e.region), ',') - 1
+        )
+        ),
+        e.REGION
+        ) = f.id
+        WHERE
+        1 = 1
+        and b.wid is not null
+        <if test="status!=null and status!='' ">
+            and case when #{status}='5' or #{status}='2,4' then a.status !='1' else
+            a.status=#{status} end
+        </if>
+
+        <if test="score!=null and score!='' ">
+            and d.id=#{score}
+        </if>
+        <if test="userWid!=null and userWid!='' ">
+            and a.user_wid=#{userWid}
+        </if>
+        <if test="type!=null and type!='' ">
+            and a.type=#{type}
+        </if>
+        union all
+        SELECT
+        a.wid,
+        b. NAME AS `name`,
+        TIMESTAMPDIFF(
+        YEAR,
+        CONCAT(e.BIRTH_DATE),
+        NOW()
+        ) AS age,
+        a. STATUS AS `status`,
+        c. NAME AS statusName,
+        date_format(a.START_TIME,'%Y-%m-%d %H:%i') AS startTime,
+        date_format(a.END_TIME,'%Y-%m-%d %H:%i') AS endTime,
+        CONCAT(
+        DATE_FORMAT(
+        a.START_TIME,
+        '%Y-%m-%d %H:%i'
+        ),
+        '至',
+        DATE_FORMAT(a.END_TIME, '%Y-%m-%d %H:%i')
+        ) AS serviceTime,
+        date_format(a.CREATE_TIME,'%Y-%m-%d %H:%i') AS createTime,
+        f.full_name AS regionName
+        FROM
+        tb_Order_info a
+        LEFT JOIN tb_activity_room_info b ON a.MAIN_ID = b.wid
+        LEFT JOIN tb_dic_order_status c ON a.`STATUS` = c.ID
+        LEFT JOIN tb_dic_score d ON a.SCORE >= d.`START` and a.SCORE <![CDATA[<=]]> d.`END`
+        LEFT JOIN tb_elderly_info e ON a.ELDERLY_ID = e.WID
+        LEFT JOIN tb_dic_xj_xzqh f ON
+        IF (
+        INSTR(REVERSE(e.region), ',') != 0,
+        REVERSE(
+        LEFT (
+        REVERSE(e.region),
+        INSTR(REVERSE(e.region), ',') - 1
+        )
+        ),
+        e.REGION
+        ) = f.id
+        WHERE
+        1 = 1
+        and b.wid is not null
+        <if test="status!=null and status!='' ">
+            and case when #{status}='5' or #{status}='2,4' then a.status !='1' else
+            a.status=#{status} end
+        </if>
+
+        <if test="score!=null and score!='' ">
+            and d.id=#{score}
+        </if>
+        <if test="userWid!=null and userWid!='' ">
+            and a.user_wid=#{userWid}
         </if>
         <if test="type!=null and type!='' ">
             and a.type=#{type}

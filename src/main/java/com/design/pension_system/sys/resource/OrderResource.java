@@ -1,5 +1,6 @@
 package com.design.pension_system.sys.resource;
 
+import com.design.pension_system.sys.service.ElderlyService;
 import com.design.pension_system.sys.service.OrderService;
 import com.design.pension_system.sys.util.CookieUtil;
 import com.design.pension_system.sys.util.HmResponseUtil;
@@ -25,7 +26,11 @@ public class OrderResource {
     private OrderService orderService;
     @ApiOperation(value = "新增订单")
     @PostMapping("/order")
-    public ResponseEntity<Map> insertOrder(@RequestBody HashMap param) throws Exception {
+    public ResponseEntity<Map> insertOrder(@RequestBody HashMap param,HttpServletRequest request) throws Exception {
+        String token = request.getHeader("User_Token");
+        String ticket = loginIdUtil.getLoginIdByToken(token);
+        String wid=elderlyService.queryWidByToken(ticket);
+        param.put("userWid",wid);
 
         int result = orderService.insertOrder(param);
         if (result > 0) {
@@ -74,6 +79,8 @@ public class OrderResource {
     }
 
     @Autowired
+    ElderlyService elderlyService;
+    @Autowired
     LoginIdUtil loginIdUtil;
     @ApiOperation(value = "用户订单列表")
     @ApiImplicitParams(value = {
@@ -81,6 +88,8 @@ public class OrderResource {
             @ApiImplicitParam(name = "name", value = "订单名称", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "pageNum", value = "分页参数：第几页", required = true, paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "分页参数：每页数量", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "status", value = "status", required = true, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "score", value = "score", required = true, paramType = "query", dataType = "string"),
     })
     @GetMapping("/order/list/user")
     public ResponseEntity<Map> OrderListByUser(@RequestParam HashMap params, HttpServletRequest request) throws Exception {
@@ -88,8 +97,9 @@ public class OrderResource {
 //        String loginId = loginIdCookie.getValue();
 
         String token = request.getHeader("User_Token");
-        String loginId = loginIdUtil.getLoginIdByToken(token);
-        params.put("loginId",loginId);
+        String ticket = loginIdUtil.getLoginIdByToken(token);
+        String wid=elderlyService.queryWidByToken(ticket);
+        params.put("userWid",wid);
 
         PageInfo<HashMap> result = orderService.OrderListByUser(params);
         if (null != result) {
