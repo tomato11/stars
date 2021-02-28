@@ -27,4 +27,5 @@ public interface UserMapper {
     List<HashMap> getMenuByLoginId(HashMap params);
     String getLoginIdByToken(String token);
 
+    List<HashMap> getEvaluateDic();
 }
