@@ -149,4 +149,18 @@ public class UserResource {
             return HmResponseUtil.error("有错误");
         }
     }
+
+    @ApiOperation(value = "好评榜排名")
+
+    @GetMapping("/evaluate/dic")
+    public ResponseEntity<Map> getEvaluateDic() throws Exception {
+
+        List<HashMap> result = userService.getEvaluateDic();
+        if (null != result) {
+            return HmResponseUtil.success(result);
+        } else {
+            return HmResponseUtil.error("有错误");
+        }
+    }
+
 }
