@@ -128,7 +128,6 @@
         FROM
         tb_Order_info a
         where a.wid=#{wid}
-
     </select>
     <select id="OrderListByUser" resultType="java.util.HashMap">
         SELECT
