@@ -167,7 +167,7 @@
     </select>
     <select id="queryUserDetils" resultType="java.util.HashMap">
         SELECT
-        wid,
+        a.wid,
         login_id AS loginId,
         a.NAME AS `name`,
         SEX AS sex,
@@ -178,7 +178,7 @@
         COMPANY AS company,
         date_format(WORKING_TIME,'%Y-%m-%d') AS workingTime,
         COST AS cost,
-        TYPE AS type,
+        a.TYPE AS type,
         c. NAME AS typeName,
         BUSINESS AS business,
          GROUP_CONCAT(e.`NAME`) AS businessName,
@@ -186,7 +186,8 @@
         REGION AS region,
         d. full_name AS regionName,
         ADDRESS AS address,
-        case when a.type='1' then 1 when a.type in('2','3','4') then 2 else   3  end as roleId
+        case when a.type='1' then 1 when a.type in('2','3','4') then 2 else   3  end as roleId,
+         IFNULL(AVG(f.SCORE), '暂无') AS score
         FROM
         tb_user_info a
         LEFT JOIN tb_dic_user_sex b ON a.sex = b.id
@@ -203,6 +204,7 @@
         a.REGION
         ) = d.id
          LEFT JOIN tb_dic_business e ON FIND_IN_SET(e.id, a.BUSINESS) > 0
+          left JOIN tb_order_info f ON f.user_wid = a.WID
         where a.wid=#{wid}
         GROUP BY a.wid
     </select>
