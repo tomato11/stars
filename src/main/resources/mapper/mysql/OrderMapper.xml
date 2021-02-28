@@ -164,7 +164,9 @@
         ) AS serviceTime,
         date_format(a.CREATE_TIME,'%Y-%m-%d %H:%i') AS createTime,
         f.full_name AS regionName,
-        a.DESCRIBE as `describe`
+        a.DESCRIBE as `describe`,
+        e.HEALTH_DESCRIPTION as healthDescription,
+        e.wid as elderlyWid
         FROM
         tb_Order_info a
         LEFT JOIN tb_user_info b ON a.MAIN_ID = b.wid
