@@ -121,7 +121,6 @@
          delete from tb_Order_info where wid=#{wid}
     </delete>
 
-
     <select id="OrderDetails" resultType="java.util.HashMap">
        SELECT
        REASON as reason,
