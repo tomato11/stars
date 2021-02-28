@@ -152,15 +152,15 @@
         ) AS age,
        case when a.SCORE is not null then '5' else   a. STATUS end AS `status`,
         c. NAME AS statusName,
-        date_format(START_TIME,'%Y-%m-%d %H:%i') AS startTime,
-        date_format(END_TIME,'%Y-%m-%d %H:%i') AS endTime,
+        date_format(START_TIME,'%Y-%m-%d') AS startTime,
+        date_format(END_TIME,'%Y-%m-%d') AS endTime,
         CONCAT(
         DATE_FORMAT(
         START_TIME,
-        '%Y-%m-%d %H:%i'
+        '%Y-%m-%d'
         ),
         '至',
-        DATE_FORMAT(END_TIME, '%Y-%m-%d %H:%i')
+        DATE_FORMAT(END_TIME, '%Y-%m-%d')
         ) AS serviceTime,
         date_format(a.CREATE_TIME,'%Y-%m-%d %H:%i') AS createTime,
         f.full_name AS regionName,
@@ -267,15 +267,15 @@
         ) AS age,
         case when a.SCORE is not null then '5' else   a. STATUS end  as `status`,
         case when a.status ='2' then '预约成功' else c. NAME end AS statusName,
-        date_format(a.START_TIME,'%Y-%m-%d') AS startTime,
-        date_format(a.END_TIME,'%Y-%m-%d') AS endTime,
+        date_format(b.START_TIME,'%Y-%m-%d') AS startTime,
+        date_format(b.END_TIME,'%Y-%m-%d') AS endTime,
         CONCAT(
         DATE_FORMAT(
-        a.START_TIME,
+        b.START_TIME,
         '%Y-%m-%d %H:%i'
         ),
         '至',
-        DATE_FORMAT(a.END_TIME, '%Y-%m-%d')
+        DATE_FORMAT(b.END_TIME, '%Y-%m-%d')
         ) AS serviceTime,
         date_format(a.CREATE_TIME,'%Y-%m-%d') AS createTime,
        g.name as typeName,
