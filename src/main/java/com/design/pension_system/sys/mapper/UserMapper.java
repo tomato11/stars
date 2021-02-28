@@ -28,5 +28,4 @@ public interface UserMapper {
     String getLoginIdByToken(String token);
 
     List<HashMap> getEvaluateDic();
-
 }
