@@ -82,7 +82,6 @@ public class OrderResource {
         }
     }
 
-
     @ApiOperation(value = "用户订单列表")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "loginId", value = "当前账号", required = false, paramType = "query", dataType = "string"),
