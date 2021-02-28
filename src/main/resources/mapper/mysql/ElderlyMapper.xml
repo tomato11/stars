@@ -12,7 +12,7 @@
                 wid,
             </if>
             <if test="mainId != null and mainId != ''">
-                main_id,
+                MAIN_ID,
             </if>
             <if test="name != null and name != ''">
                 name,
@@ -49,7 +49,7 @@
                 #{wid},
             </if>
             <if test="mainId != null and mainId != ''">
-                main_id,
+                #{mainId},
             </if>
             <if test="name != null and name != ''">
                 #{name},
