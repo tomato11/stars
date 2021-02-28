@@ -15,4 +15,6 @@ public interface ObjectService {
   Object queryXzqhTree( );
 
     HashMap<String, Object> selectAll(HashMap<String, Object> params);
+
+
 }
