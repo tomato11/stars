@@ -150,7 +150,8 @@
         where a.wid=#{wid}
 
     </select>
-    
+
+
     <select id="ElderlyListByUser" resultType="java.util.HashMap">
         SELECT
         wid,
