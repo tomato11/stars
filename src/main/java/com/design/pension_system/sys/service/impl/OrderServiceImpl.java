@@ -46,6 +46,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public HashMap OrderDetails(String wid) {
+
         HashMap map = orderMapper.OrderDetails(wid);
         List<HashMap> hashMaps = objectService.queryPhotoByMainId(wid, orderPhotoId);
         map.put("orderPhoto",hashMaps);
@@ -54,10 +55,34 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public PageInfo<HashMap> OrderListByUser(HashMap params) {
-        HmServiceUtil.checkPageParams(params);
-        PageHelper.startPage(params);
-        List<HashMap> hashMaps = orderMapper.OrderListByUser(params);
-        return new PageInfo<HashMap>(hashMaps);
+        String userWid = String.valueOf(params.get("userWid"));
+       String uesrType= orderMapper.queryUserTypeByWid(userWid);
+        if("1".equals(uesrType)){//用户
+            String orderType = (String)params.get("type");
+            if(orderType.contains("123")){//医疗护理         阳光陪护      家政服务
+                HmServiceUtil.checkPageParams(params);
+                PageHelper.startPage(params);
+                List<HashMap> hashMaps =  orderMapper.queryOrderThree(params);
+                return new PageInfo<HashMap>(hashMaps);
+            }else if(orderType.equals("4")){//活动室
+                HmServiceUtil.checkPageParams(params);
+                PageHelper.startPage(params);
+                List<HashMap> hashMaps = orderMapper.OrderListByRoom(params);
+                return new PageInfo<HashMap>(hashMaps);
+            }else{//活动
+                HmServiceUtil.checkPageParams(params);
+                PageHelper.startPage(params);
+                List<HashMap> hashMaps = orderMapper.OrderListByActivity(params);
+                return new PageInfo<HashMap>(hashMaps);
+            }
+        }else{//专业人员
+            HmServiceUtil.checkPageParams(params);
+            PageHelper.startPage(params);
+            List<HashMap> hashMaps =  orderMapper.queryOrderThree(params);
+            return new PageInfo<HashMap>(hashMaps);
+        }
+
+
     }
 
     @Override
