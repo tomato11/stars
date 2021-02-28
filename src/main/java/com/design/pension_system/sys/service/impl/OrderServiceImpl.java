@@ -59,7 +59,7 @@ private String elderlyPhoto="05";
        String uesrType= orderMapper.queryUserTypeByWid(userWid);
         if("1".equals(uesrType)){//用户
             String orderType = (String)params.get("type");
-            if(orderType.contains("123")){//医疗护理         阳光陪护      家政服务
+            if("123".contains(orderType)){//医疗护理         阳光陪护      家政服务
                 HmServiceUtil.checkPageParams(params);
                 PageHelper.startPage(params);
                 List<HashMap> hashMaps =  orderMapper.queryOrderThree(params);
