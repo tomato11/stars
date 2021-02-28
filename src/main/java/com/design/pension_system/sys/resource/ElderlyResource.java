@@ -28,8 +28,8 @@ public class ElderlyResource {
     @PostMapping("/Elderly")
     public ResponseEntity<Map> insertElderly(@RequestBody HashMap param,HttpServletRequest request) throws Exception {
         String token = request.getHeader("User_Token");
-        String ticket = loginIdUtil.getLoginIdByToken(token);
-        String wid=elderlyService.queryWidByToken(ticket);
+
+        String wid=elderlyService.queryWidByToken(token);
         param.put("mainId",wid);
         int result = elderlyService.insertElderly(param);
         if (result > 0) {
@@ -87,8 +87,8 @@ public class ElderlyResource {
     @GetMapping("/Elderly/list/user")
     public ResponseEntity<Map> ElderlyListByUser(@RequestParam HashMap params, HttpServletRequest request) throws Exception {
         String token = request.getHeader("User_Token");
-        String ticket = loginIdUtil.getLoginIdByToken(token);
-        String wid=elderlyService.queryWidByToken(ticket);
+
+        String wid=elderlyService.queryWidByToken(token);
         params.put("mainId",wid);
         PageInfo<HashMap> result = elderlyService.ElderlyListByUser(params);
         if (null != result) {
