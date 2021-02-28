@@ -105,7 +105,8 @@
         b.`NAME` AS `name`,
         GROUP_CONCAT(d.`NAME`) AS businessName,
         c. NAME AS typeName,
-        COST AS cost
+        COST AS cost,
+        case when b.type='2' then '1' when  b.type='3'  then '2' when b.type='4' then '3'  end as    type
         FROM
         tb_order_info a
         right JOIN tb_user_info b ON a.MAIN_ID = b.WID
