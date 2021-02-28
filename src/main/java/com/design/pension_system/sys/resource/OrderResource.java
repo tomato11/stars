@@ -32,8 +32,8 @@ public class OrderResource {
     @PostMapping("/order")
     public ResponseEntity<Map> insertOrder(@RequestBody HashMap param,HttpServletRequest request) throws Exception {
         String token = request.getHeader("User_Token");
-        String ticket = loginIdUtil.getLoginIdByToken(token);
-        String wid=elderlyService.queryWidByToken(ticket);
+
+        String wid=elderlyService.queryWidByToken(token);
         param.put("userWid",wid);
 
         int result = orderService.insertOrder(param);
@@ -91,6 +91,7 @@ public class OrderResource {
             @ApiImplicitParam(name = "pageSize", value = "分页参数：每页数量", required = true, paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "status", value = "status", required = true, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "score", value = "score", required = true, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "type", value = "score", required = true, paramType = "query", dataType = "string"),
     })
     @GetMapping("/order/list/user")
     public ResponseEntity<Map> OrderListByUser(@RequestParam HashMap params, HttpServletRequest request) throws Exception {
@@ -98,8 +99,8 @@ public class OrderResource {
 //        String loginId = loginIdCookie.getValue();
 
         String token = request.getHeader("User_Token");
-        String ticket = loginIdUtil.getLoginIdByToken(token);
-        String wid=elderlyService.queryWidByToken(ticket);
+//        String ticket = loginIdUtil.getLoginIdByToken(token);
+        String wid=elderlyService.queryWidByToken(token);
         params.put("userWid",wid);
 
         PageInfo<HashMap> result = orderService.OrderListByUser(params);
