@@ -19,4 +19,12 @@ public interface OrderMapper {
 
 
     List<HashMap> orderProgress();
+
+    String queryUserTypeByWid(String userWid);
+
+    List<HashMap> queryOrderThree(HashMap params);
+
+    List<HashMap> OrderListByRoom(HashMap params);
+
+    List<HashMap> OrderListByActivity(HashMap params);
 }
