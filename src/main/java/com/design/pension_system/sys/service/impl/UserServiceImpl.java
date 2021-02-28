@@ -120,4 +120,9 @@ public class UserServiceImpl implements UserService {
     public List<HashMap> getMenuByLoginId(HashMap params) {
         return userMapper.getMenuByLoginId(params);
     }
+
+    @Override
+    public List<HashMap> getEvaluateDic() {
+        return userMapper.getEvaluateDic();
+    }
 }
