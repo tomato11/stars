@@ -23,4 +23,6 @@ public interface UserService {
     int updateUser(HashMap param);
 
     List<HashMap> getMenuByLoginId(HashMap params);
+
+    List<HashMap> getEvaluateDic();
 }
