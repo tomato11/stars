@@ -24,6 +24,10 @@ import java.util.Map;
 public class OrderResource {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    ElderlyService elderlyService;
+    @Autowired
+    LoginIdUtil loginIdUtil;
     @ApiOperation(value = "新增订单")
     @PostMapping("/order")
     public ResponseEntity<Map> insertOrder(@RequestBody HashMap param,HttpServletRequest request) throws Exception {
@@ -78,10 +82,7 @@ public class OrderResource {
         }
     }
 
-    @Autowired
-    ElderlyService elderlyService;
-    @Autowired
-    LoginIdUtil loginIdUtil;
+
     @ApiOperation(value = "用户订单列表")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "loginId", value = "当前账号", required = false, paramType = "query", dataType = "string"),
