@@ -23,7 +23,7 @@ public class OrderServiceImpl implements OrderService {
     ObjectService objectService;
     private String orderPhotoId = "07";
 
-
+private String elderlyPhoto="05";
     @Override
     public int insertOrder(HashMap param) {
         int i = orderMapper.insertOrder(param);
@@ -63,6 +63,14 @@ public class OrderServiceImpl implements OrderService {
                 HmServiceUtil.checkPageParams(params);
                 PageHelper.startPage(params);
                 List<HashMap> hashMaps =  orderMapper.queryOrderThree(params);
+
+                for (int i = 0; i < hashMaps.size(); i++) {
+                    HashMap hashMap = hashMaps.get(i);
+                    String elderlyWid = (String)hashMap.get("elderlyWid");
+                    List<HashMap> elderlyPhotoList = objectService.queryPhotoByMainId(elderlyWid, elderlyPhoto);
+                    hashMap.put("elderlyPhoto",elderlyPhotoList);
+                }
+
                 return new PageInfo<HashMap>(hashMaps);
             }else if(orderType.equals("4")){//活动室
                 HmServiceUtil.checkPageParams(params);
