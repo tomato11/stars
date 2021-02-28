@@ -130,6 +130,7 @@
         IFNULL(AVG(b.SCORE), '暂无') AS score,
         GROUP_CONCAT(d.`NAME`) AS businessName,
         c. NAME AS typeName,
+        b.type as type,
         COST AS cost
         FROM
         tb_user_info a
