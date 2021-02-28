@@ -118,9 +118,9 @@
         area,
         COST AS cost,
         date_format(UPDATE_TIME,'%Y-%m-%d %H:%i') AS updateTime,
-        date_format(a.start_time,'%Y-%m-%d') as startTime,
-        date_format(a.end_time,'%Y-%m-%d') as endTime,
-        concat(date_format(a.start_time,'%Y-%m-%d'),'~',date_format(end_time,'%Y-%m-%d')) as businessTime,
+         a.start_time as startTime,
+         a.end_time  as endTime,
+        concat( a.start_time ,'~', end_time ) as businessTime,
         c.full_name as regionName
         FROM
         tb_activity_room_info a
