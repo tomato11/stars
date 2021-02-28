@@ -151,8 +151,6 @@
 
     </select>
 
-
-
     <select id="ElderlyListByUser" resultType="java.util.HashMap">
         SELECT
         wid,
