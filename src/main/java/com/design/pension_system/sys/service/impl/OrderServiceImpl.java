@@ -46,11 +46,15 @@ private String ElderlyPhoto="05";
 
     @Override
     public HashMap OrderDetails(String wid) {
-
-        HashMap map = orderMapper.OrderDetails(wid);
+        HashMap   map= orderMapper.OrderDetails(wid);
         List<HashMap> hashMaps = objectService.queryPhotoByMainId(wid, orderPhotoId);
-        map.put("orderPhoto",hashMaps);
-        return map;
+        if(null!=map){
+            map.put("orderPhoto",hashMaps);
+            return map;
+        }else{
+            return new HashMap();
+        }
+
     }
 
     @Override
