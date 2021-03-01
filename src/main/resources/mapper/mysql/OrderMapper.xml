@@ -366,7 +366,8 @@
         1 = 1
         and b.wid is not null
         <if test="status!=null and status!='' ">
-            and case when #{status}='5' or #{status}='2,4' then a.status !='1' else
+            and case when #{status}='5' or #{status}='2,4' then a.status !='1'
+            when #{status}='4' then a.status=#{status} or a.status='3' else
             a.status=#{status} end
         </if>
         <if test="score!=null and score!='' ">
