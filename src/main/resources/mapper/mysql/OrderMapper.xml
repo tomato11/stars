@@ -213,9 +213,9 @@
         ) AS age,
         case when a.SCORE is not null then '5' else   a. STATUS end AS `status`,
         case when a.status ='2' then '预约成功' else c. NAME end AS statusName,
-        a.START_TIME AS startTime,
-        a.END_TIME AS endTime,
-        CONCAT( a.START_TIME ,'至',a.END_TIME )AS serviceTime,
+        b.START_TIME AS startTime,
+        b.END_TIME AS endTime,
+        CONCAT( b.START_TIME ,'至',b.END_TIME )AS serviceTime,
         date_format(a.CREATE_TIME,'%Y-%m-%d %H:%i') AS createTime,
         g.name AS typeName,
         b.type,
@@ -249,7 +249,7 @@
         <if test="score!=null and score!='' ">
             and d.id=#{score}
         </if>
-        <if test="userWid!=null and userWid!='' ">
+        <if test="userWid!=null and userWid!=''  ">
             and a.user_wid=#{userWid}
         </if>
         <if test="type!=null and type!='' ">
@@ -314,6 +314,66 @@
         </if>
         <if test="userWid!=null and userWid!='' ">
             and a.user_wid=#{userWid}
+        </if>
+        <if test="type!=null and type!='' ">
+            and a.type=#{type}
+        </if>
+    </select>
+    <select id="queryOrderThreeByService" resultType="java.util.HashMap">
+        SELECT
+        a.wid,
+        e. NAME AS `name`,
+        TIMESTAMPDIFF(
+        YEAR,
+        CONCAT(e.BIRTH_DATE),
+        NOW()
+        ) AS age,
+        case when a.SCORE is not null then '5' else   a. STATUS end AS `status`,
+        c. NAME AS statusName,
+        date_format(START_TIME,'%Y-%m-%d') AS startTime,
+        date_format(END_TIME,'%Y-%m-%d') AS endTime,
+        CONCAT(
+        DATE_FORMAT(
+        START_TIME,
+        '%Y-%m-%d'
+        ),
+        '至',
+        DATE_FORMAT(END_TIME, '%Y-%m-%d')
+        ) AS serviceTime,
+        date_format(a.CREATE_TIME,'%Y-%m-%d %H:%i') AS createTime,
+        f.full_name AS regionName,
+        a.DESCRIBE as `describe`,
+        e.HEALTH_DESCRIPTION as healthDescription,
+        e.wid as elderlyWid
+        FROM
+        tb_Order_info a
+        LEFT JOIN tb_user_info b ON a.MAIN_ID = b.wid
+        LEFT JOIN tb_dic_order_status c ON a.`STATUS` = c.ID
+        LEFT JOIN tb_dic_score d ON a.SCORE >= d.`START` and a.SCORE <![CDATA[<=]]> d.`END`
+        LEFT JOIN tb_elderly_info e ON a.ELDERLY_ID = e.WID
+        LEFT JOIN tb_dic_xj_xzqh f ON
+        IF (
+        INSTR(REVERSE(e.region), ',') != 0,
+        REVERSE(
+        LEFT (
+        REVERSE(e.region),
+        INSTR(REVERSE(e.region), ',') - 1
+        )
+        ),
+        e.REGION
+        ) = f.id
+        WHERE
+        1 = 1
+        and b.wid is not null
+        <if test="status!=null and status!='' ">
+            and case when #{status}='5' or #{status}='2,4' then a.status !='1' else
+            a.status=#{status} end
+        </if>
+        <if test="score!=null and score!='' ">
+            and d.id=#{score}
+        </if>
+        <if test="userWid!=null and userWid!='' ">
+            and a.main_id=#{userWid}
         </if>
         <if test="type!=null and type!='' ">
             and a.type=#{type}
