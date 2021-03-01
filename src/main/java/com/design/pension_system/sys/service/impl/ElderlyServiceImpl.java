@@ -32,7 +32,7 @@ public class ElderlyServiceImpl implements ElderlyService {
         objectService.savePhoto((List<HashMap>) param.get("ElderlyPhoto"), wid,ElderlyPhoneId);
         return i;
     }
-
+//ElderlyPhotoList
     @Override
     public int updateElderly(HashMap param) {
         int i = elderlyMapper.updateElderly(param);
