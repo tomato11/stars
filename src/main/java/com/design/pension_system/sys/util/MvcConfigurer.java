@@ -23,7 +23,8 @@ public class MvcConfigurer implements WebMvcConfigurer {
                 "/api/sendLoginCode/**","/api/register/**","/api/loginCheck/**"
                 ,"/api/selectCommonDic/**" ,"/api/selectCommonDic/multi/**",
                 "/api/user/getBusinessByType/**",
-                "/api/xzqh/tree/**", "/api/checkPhone/**","/api/checkLoginId/**", "/upload/**","/api/upload/**");
+                "/api/xzqh/tree/**", "/api/checkPhone/**","/api/checkLoginId/**", "/upload/**","/api/upload/**"
+        ,"/api/checkLoginId/**");
     }
 //    ,"/*.html"
 //    @Override
