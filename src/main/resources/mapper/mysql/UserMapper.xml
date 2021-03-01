@@ -91,6 +91,7 @@
         LEFT JOIN tb_dic_user_type b ON a.type = b.ID
         LEFT JOIN tb_dic_user_sex c ON a.sex = c.id
         where 1=1
+        and a.type is not null
         <if test="type!=null and type!=''">
             and a.type=#{type}
         </if>
