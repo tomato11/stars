@@ -89,7 +89,7 @@
         <if test="type!=null and type!=''">
             and a.type=#{type}
         </if>
-        order by a.update_time
+        order by a.update_time desc
 
     </select>
 </mapper>
