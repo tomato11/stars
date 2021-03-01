@@ -23,7 +23,7 @@ public class OrderServiceImpl implements OrderService {
     ObjectService objectService;
     private String orderPhotoId = "07";
 
-private String elderlyPhoto="05";
+private String ElderlyPhoto="05";
     @Override
     public int insertOrder(HashMap param) {
         int i = orderMapper.insertOrder(param);
@@ -67,8 +67,8 @@ private String elderlyPhoto="05";
                 for (int i = 0; i < hashMaps.size(); i++) {
                     HashMap hashMap = hashMaps.get(i);
                     String elderlyWid = (String)hashMap.get("elderlyWid");
-                    List<HashMap> elderlyPhotoList = objectService.queryPhotoByMainId(elderlyWid, elderlyPhoto);
-                    hashMap.put("elderlyPhoto",elderlyPhotoList);
+                    List<HashMap> ElderlyPhotoList = objectService.queryPhotoByMainId(elderlyWid, ElderlyPhoto);
+                    hashMap.put("ElderlyPhoto",ElderlyPhotoList);
                 }
 
                 return new PageInfo<HashMap>(hashMaps);
@@ -86,7 +86,13 @@ private String elderlyPhoto="05";
         }else{//专业人员
             HmServiceUtil.checkPageParams(params);
             PageHelper.startPage(params);
-            List<HashMap> hashMaps =  orderMapper.queryOrderThree(params);
+            List<HashMap> hashMaps =  orderMapper.queryOrderThreeByService(params);
+            for (int i = 0; i < hashMaps.size(); i++) {
+                HashMap hashMap = hashMaps.get(i);
+                String elderlyWid = (String)hashMap.get("elderlyWid");
+                List<HashMap> ElderlyPhotoList = objectService.queryPhotoByMainId(elderlyWid, ElderlyPhoto);
+                hashMap.put("ElderlyPhoto",ElderlyPhotoList);
+            }
             return new PageInfo<HashMap>(hashMaps);
         }
 
