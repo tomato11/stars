@@ -27,4 +27,6 @@ public interface OrderMapper {
     List<HashMap> OrderListByRoom(HashMap params);
 
     List<HashMap> OrderListByActivity(HashMap params);
+
+    List<HashMap> queryOrderThreeByService(HashMap params);
 }
