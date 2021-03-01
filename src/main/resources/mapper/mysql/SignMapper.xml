@@ -114,7 +114,7 @@
                 #{number},
             </if>
             <if test="region != null and region != ''">
-                #{REGION},
+                #{region},
             </if>
             <if test="address != null and address != ''">
                 #{address},
