@@ -140,7 +140,7 @@
             and type=#{type}
         </if>
         <if test="name!=null and name!='' ">
-            and INSTR(name,#{name})
+            and INSTR(a.name,#{name})
         </if>
     </select>
     <select id="activityRoomDetails" resultType="java.util.HashMap">
